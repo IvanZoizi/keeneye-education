@@ -6,7 +6,6 @@ import keenay.education.entity.EmailsUser;
 import keenay.education.exception.ExceptionDetection;
 import keenay.education.exception.errors.NoMailFoundException;
 import keenay.education.repository.EmailsUserRepository;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -15,24 +14,37 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-@RequiredArgsConstructor
 public class EmailListenerService {
+
     private final EmailSender emailSender;
     private final ExceptionDetection exceptionDetection;
     private final RabbitMqConfig rabbitMqConfig;
     private final RabbitTemplate rabbitTemplate;
     private final EmailsUserRepository emailsUserRepository;
+    private final String nameQueueRetry;
+    private final String nameQueueException;
 
-    @Value("${rabbitmq.queue.name-retry}")
-    private String nameQueueRetry;
-
-    @Value("${rabbitmq.queue.name-exception}")
-    private String nameQueueException;
+    public EmailListenerService(
+            EmailSender emailSender,
+            ExceptionDetection exceptionDetection,
+            RabbitMqConfig rabbitMqConfig,
+            RabbitTemplate rabbitTemplate,
+            EmailsUserRepository emailsUserRepository,
+            @Value("${rabbitmq.queue.name-retry}") String nameQueueRetry,
+            @Value("${rabbitmq.queue.name-exception}") String nameQueueException
+    ) {
+        this.emailSender = emailSender;
+        this.exceptionDetection = exceptionDetection;
+        this.rabbitMqConfig = rabbitMqConfig;
+        this.rabbitTemplate = rabbitTemplate;
+        this.emailsUserRepository = emailsUserRepository;
+        this.nameQueueRetry = nameQueueRetry;
+        this.nameQueueException = nameQueueException;
+    }
 
     @RabbitListener(queues = "${rabbitmq.queue.name}")
     public void sendEmail(EmailDTO emailDTO) {
         try {
-            log.info(emailDTO.getEmail() + " send to email");
             emailSender.sendSimpleEmail(emailDTO.getEmail(), emailDTO.getSubject(), emailDTO.getText());
             EmailsUser emailsUser = emailsUserRepository.findById(emailDTO.getEmailsUserId())
                     .orElseThrow(() -> new NoMailFoundException("This email has not been found."));
@@ -73,5 +85,4 @@ public class EmailListenerService {
         emailsUser.setExceptionMessage(emailDTO.getEx().getMessage());
         emailsUserRepository.save(emailsUser);
     }
-
 }

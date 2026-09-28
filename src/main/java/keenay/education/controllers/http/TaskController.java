@@ -6,7 +6,6 @@ import keenay.education.dto.tasks.TaskBodyDTO;
 import keenay.education.dto.tasks.TaskBodyStatusDTO;
 import keenay.education.dto.tasks.TaskDTO;
 import keenay.education.security.CustomUserDetail;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,42 +18,42 @@ import java.util.List;
 @Tag(name = "Tasks Endpoints")
 @RequestMapping("/api/v1/tasks")
 public interface TaskController {
-    ResponseEntity<TaskDTO> createTask(
+    TaskDTO createTask(
             @AuthenticationPrincipal CustomUserDetail customUserDetail,
             @Valid @RequestBody TaskBodyDTO taskBodyDTO,
             @RequestParam("file") MultipartFile photo);
 
-    ResponseEntity<TaskDTO> getTask(
+    TaskDTO getTask(
             @AuthenticationPrincipal CustomUserDetail customUserDetail,
-            @PathVariable("id")  Long id);
+            @PathVariable("id") Long id);
 
-    ResponseEntity<List<TaskDTO>> getAvailTasks(
+    List<TaskDTO> getAvailTasks(
             @AuthenticationPrincipal CustomUserDetail customUserDetail);
 
-    ResponseEntity<List<TaskDTO>> getCreatedTasks(
+    List<TaskDTO> getCreatedTasks(
             @AuthenticationPrincipal CustomUserDetail customUserDetail);
 
-    ResponseEntity<TaskDTO> updateTask(
+    TaskDTO updateTask(
             @AuthenticationPrincipal CustomUserDetail customUserDetail,
             @PathVariable("id") Long id,
             @Valid @RequestBody TaskBodyDTO taskBodyDTO);
 
-    ResponseEntity<TaskDTO> updatePhotoTask(
+    TaskDTO updatePhotoTask(
             @AuthenticationPrincipal CustomUserDetail customUserDetail,
             @PathVariable("id") Long id,
             @RequestParam("file") MultipartFile photo);
 
-    ResponseEntity<TaskDTO> updateTaskStatus(
+    TaskDTO updateTaskStatus(
             @AuthenticationPrincipal CustomUserDetail customUserDetail,
             @PathVariable("id") Long id,
             @Valid @RequestBody TaskBodyStatusDTO taskBodyStatusDTO);
 
-    ResponseEntity<TaskDTO> setAdvertisement(
+    TaskDTO setAdvertisement(
             @AuthenticationPrincipal CustomUserDetail customUserDetail,
             @PathVariable("id") Long id,
             @PathVariable("advertisementId") Long advertisementId);
 
-    ResponseEntity<Void> deleteTask(
+    void deleteTask(
             @AuthenticationPrincipal CustomUserDetail customUserDetail,
             @PathVariable("id") Long id);
 }

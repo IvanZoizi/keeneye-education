@@ -1,6 +1,8 @@
 package keenay.education.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -14,6 +16,8 @@ import java.util.List;
 @Data
 @Table(name = "customers")
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Customers {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY )

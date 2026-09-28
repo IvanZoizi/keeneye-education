@@ -1,6 +1,8 @@
 package keenay.education.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -12,6 +14,8 @@ import java.time.LocalDateTime;
 @Data
 @Table(name = "tickets")
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY )
@@ -20,7 +24,7 @@ public class Ticket {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(referencedColumnName = "id", name = "admin_id")
-    private Users admin;
+    private Users admin = null;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(referencedColumnName = "id", name = "sender_id")

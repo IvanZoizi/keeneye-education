@@ -1,6 +1,8 @@
 package keenay.education.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.aspectj.bridge.Message;
@@ -14,17 +16,19 @@ import java.util.List;
 @Data
 @Table(name = "chat")
 @NoArgsConstructor
+@Builder
+@AllArgsConstructor
 public class Chat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY )
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(referencedColumnName = "id", name = "seller_id")
     private Users seller;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(referencedColumnName = "id", name = "customer_id")
     private Users customer;
 

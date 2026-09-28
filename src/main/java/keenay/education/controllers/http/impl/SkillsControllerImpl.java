@@ -9,7 +9,6 @@ import keenay.education.security.CustomUserDetail;
 import keenay.education.service.SkillsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -19,55 +18,46 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
+@PreAuthorize("hasAuthority('ROLE_seller')")
 public class SkillsControllerImpl implements SkillsController {
 
     private final SkillsService skillsService;
 
-    @Override
     @PostMapping
-    @PreAuthorize("hasAuthority('ROLE_seller')")
-    public ResponseEntity<SkillsDTO> createSkillForUser(
+    public SkillsDTO createSkillForUser(
             @AuthenticationPrincipal CustomUserDetail userDetail,
-            @Valid @RequestBody SkillsBodyDTO skillsBodyDTO) {
-        return ResponseEntity.ok(skillsService.createSkillForUser(userDetail, skillsBodyDTO));
-    }
-
-    @Override
-    @GetMapping
-    @PreAuthorize("hasAuthority('ROLE_seller')")
-    public ResponseEntity<List<SkillsDTO>> getSkills(@AuthenticationPrincipal CustomUserDetail userDetail) {
-        return ResponseEntity.ok(skillsService.getSkills(userDetail));
-    }
-
-    @Override
-    @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('ROLE_seller')")
-    public ResponseEntity<SkillsDTO> getSkill(
-            @AuthenticationPrincipal CustomUserDetail userDetail,
-            @PathVariable("id") Long id
+            @Valid @RequestBody SkillsBodyDTO skillsBodyDTO
     ) {
-        return ResponseEntity.ok(skillsService.getSkill(userDetail, id));
+        return skillsService.createSkillForUser(userDetail, skillsBodyDTO);
     }
 
-    @Override
-    @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('ROLE_seller')")
-    public ResponseEntity<SkillsDTO> updateSkill(
+    @GetMapping
+    public List<SkillsDTO> getSkills(@AuthenticationPrincipal CustomUserDetail userDetail) {
+        return skillsService.getSkills(userDetail);
+    }
+
+    @GetMapping("/{id}")
+    public SkillsDTO getSkill(
             @AuthenticationPrincipal CustomUserDetail userDetail,
-            @PathVariable("id") Long id,
+            @PathVariable Long id
+    ) {
+        return skillsService.getSkill(userDetail, id);
+    }
+
+    @PutMapping("/{id}")
+    public SkillsDTO updateSkill(
+            @AuthenticationPrincipal CustomUserDetail userDetail,
+            @PathVariable Long id,
             @Valid @RequestBody SkillsPutBodyDTO skillsPutBodyDTO
     ) {
-        return ResponseEntity.ok(skillsService.updateSkill(userDetail, id, skillsPutBodyDTO));
+        return skillsService.updateSkill(userDetail, id, skillsPutBodyDTO);
     }
 
-    @Override
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('ROLE_seller')")
-    public ResponseEntity<Void> deleteSkill(
+    public void deleteSkill(
             @AuthenticationPrincipal CustomUserDetail userDetail,
-            @PathVariable("id") Long id
+            @PathVariable Long id
     ) {
         skillsService.deleteSkill(userDetail, id);
-        return ResponseEntity.noContent().build();
     }
 }

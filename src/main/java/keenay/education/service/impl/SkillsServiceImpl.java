@@ -30,11 +30,12 @@ public class SkillsServiceImpl implements SkillsService {
     public SkillsDTO createSkillForUser(CustomUserDetail userDetail, SkillsBodyDTO skillsBodyDTO) {
         Animals animal = animalsRepository.findByName(skillsBodyDTO.getAnimal())
                 .orElseThrow(() -> new AnimalIsNotSupported("This animal is not handled in our service."));
-        Skills skill = new Skills();
-        skill.setTitle(skillsBodyDTO.getTitle());
-        skill.setDescription(skillsBodyDTO.getDescription());
-        skill.setAnimal(animal);
-        skill.setSeller(userDetail.getUser().getSeller());
+        Skills skill = Skills.builder()
+                .title(skillsBodyDTO.getTitle())
+                .description(skillsBodyDTO.getDescription())
+                .animal(animal)
+                .seller(userDetail.getUser().getSeller())
+                .build();
         return mapperService.getSkill(skillsRepository.save(skill));
     }
 

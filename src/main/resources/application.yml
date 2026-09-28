@@ -53,11 +53,16 @@ rabbitmq:
     name-retry: email-retry
     name-exception: email-exception
     retry-attempt: 5
+    time-retry: 30000
   stomp:
     host: localhost
     port: 61613
     login: admin
     passcode: admin
+
+caffeine:
+  expire-minutes: 5
+  size: 10_000
 
 minio:
   endpoint: http://localhost:9000

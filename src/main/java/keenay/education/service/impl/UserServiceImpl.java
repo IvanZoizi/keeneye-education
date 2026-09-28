@@ -42,32 +42,44 @@ public class UserServiceImpl implements UserService {
     private final EmailCreateApplicationService emailCreateApplicationService;
 
     private Users createUser(String email, String password, List<Roles> roles) {
-        Users user = new Users();
-        user.setEmail(email);
-        user.setPassword(passwordEncoder.encode(password));
-        user.setRoles(roles);
+        Users user = Users.builder()
+                .email(email)
+                .password(passwordEncoder.encode(password))
+                .roles(roles)
+                .build();
         return userRepository.save(user);
     }
 
+    private void validatePasswordAndRole(String password, String passwordForCheck,
+                       List<Roles> rolesList, Roles customerRole) throws AuthenticationException {
+        if  (!passwordEncoder.matches(password, passwordForCheck)) {
+            throw new AuthenticationException("Invalid password.");
+        }
+        if (UtilsService.in(rolesList, customerRole)) {
+            throw new AuthenticationException("The role has already been added");
+        }
+    }
+
     private Customers createCustomers(String name, String surname, Users user) throws AuthenticationException {
-        Customers customers = new Customers();
-        customers.setName(name);
-        customers.setSurname(surname);
-        customers.setUser(user);
+        Customers customers = Customers.builder()
+                .name(name)
+                .surname(surname)
+                .user(user)
+                .build();
         return customersRepository.save(customers);
     }
 
     private Sellers createSellers(String name, String surname, String address, String inn, String description, Users user) throws AuthenticationException {
-        Sellers seller = new Sellers();
-        seller.setName(name);
-        seller.setSurname(surname);
-        seller.setAddress(address);
-        seller.setInn(inn);
-        seller.setDescription(description);
-        seller.setUser(user);
+        Sellers seller = Sellers.builder()
+                .name(name)
+                .surname(surname)
+                .address(address)
+                .inn(inn)
+                .description(description)
+                .user(user)
+                .build();
         return sellersRepository.save(seller);
     }
-
 
     @Override
     public String registerAdmin(RegisterAdminDTO registerAdminDTO) throws AuthenticationException {
@@ -80,13 +92,8 @@ public class UserServiceImpl implements UserService {
                     List.of(adminRole));
         } else {
             Users currentUser = usersOptional.get();
-            if  (!passwordEncoder.matches(registerAdminDTO.getPassword(), currentUser.getPassword())) {
-                throw new AuthenticationException("Invalid password.");
-            }
             List<Roles> rolesList = currentUser.getRoles();
-            if (UtilsService.in(rolesList, adminRole)) {
-                throw new AuthenticationException("The role has already been added");
-            }
+            validatePasswordAndRole(registerAdminDTO.getPassword(), currentUser.getPassword(), rolesList, adminRole);
             rolesList.add(adminRole);
             currentUser.setRoles(rolesList);
             userRepository.save(currentUser);
@@ -110,13 +117,8 @@ public class UserServiceImpl implements UserService {
 
         } else {
             Users currentUser = usersOptional.get();
-            if  (!passwordEncoder.matches(registerCustomerDTO.getPassword(), currentUser.getPassword())) {
-                throw new AuthenticationException("Invalid password.");
-            }
             List<Roles> rolesList = currentUser.getRoles();
-            if (UtilsService.in(rolesList, customerRole)) {
-                throw new AuthenticationException("The role has already been added");
-            }
+            validatePasswordAndRole(registerCustomerDTO.getPassword(), currentUser.getPassword(), rolesList, customerRole);
             rolesList.add(customerRole);
             currentUser.setRoles(rolesList);
             this.createCustomers(
@@ -147,13 +149,8 @@ public class UserServiceImpl implements UserService {
 
         } else {
             Users currentUser = usersOptional.get();
-            if  (!passwordEncoder.matches(registerSellerDTO.getPassword(), currentUser.getPassword())) {
-                throw new AuthenticationException("Invalid password.");
-            }
             List<Roles> rolesList = currentUser.getRoles();
-            if (UtilsService.in(rolesList, sellerRole)) {
-                throw new AuthenticationException("The role has already been added");
-            }
+            validatePasswordAndRole(registerSellerDTO.getPassword(), currentUser.getPassword(), rolesList, sellerRole);
             rolesList.add(sellerRole);
             currentUser.setRoles(rolesList);
             this.createSellers(
@@ -181,13 +178,7 @@ public class UserServiceImpl implements UserService {
         if (user.getDeletedAt() != null) {
             throw new AuthenticationException("The user has been deleted.");
         }
-        if (user.getBannedAt() != null) {
-            throw new AuthenticationException("The user has been banned.");
-        }
-        if (user.getDeletedAt() != null) {
-            throw new AuthenticationException("The user has been deleted.");
-        }
         emailCreateApplicationService.sendEmailFor(user, "Привет, ты вошел в аккаунт", "Вход");
-        return jwtService.generateAuthToken(user.getEmail());
+        return jwtService.generateAuthToken(user.getEmail(), user.getRoles());
     }
 }

@@ -41,10 +41,11 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 
     private Advertisement createAdvertisementWithEntity(Customers customer, Pets pet,
                                                         AdvertisementBodyDTO advertisementBodyDTO) {
-        Advertisement advertisement = new Advertisement();
-        advertisement.setPet(pet);
-        advertisement.setCustomer(customer);
-        advertisement.setBudget(advertisementBodyDTO.getBudget());
+        Advertisement advertisement = Advertisement.builder()
+                .pet(pet)
+                .customer(customer)
+                .budget(advertisementBodyDTO.getBudget())
+                .build();
         return advertisementRepository.save(advertisement);
     }
 
@@ -52,7 +53,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     @Transactional
     public AdvertisementDTO createAdvertisement(CustomUserDetail customUserDetail, AdvertisementBodyDTO advertisementBodyDTO) {
         Pets pet = petsRepository.findByIdAndUserId(advertisementBodyDTO.getPetId(),
-                customUserDetail.getUser().getId())
+                        customUserDetail.getUser().getId())
                 .orElseThrow(() -> new PetsNotFoundException("This pet is not found."));
         Advertisement advertisement = createAdvertisementWithEntity(customUserDetail.getUser().getCustomer(),
                 pet, advertisementBodyDTO);
@@ -67,7 +68,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     public AdvertisementDTO getAdvertisement(CustomUserDetail customUserDetail, Long id) {
         return advertisementMapper.getDTO(
                 advertisementRepository.findByIdAndCustomer_Id(id,
-                        customUserDetail.getUser().getCustomer().getId())
+                                customUserDetail.getUser().getCustomer().getId())
                         .orElseThrow(() -> new AdvertisementNotFoundException("Advertisement is not found.")));
     }
 

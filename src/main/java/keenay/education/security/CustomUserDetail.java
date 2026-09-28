@@ -1,6 +1,7 @@
 package keenay.education.security;
 
 import keenay.education.entity.Roles;
+import keenay.education.entity.Sellers;
 import keenay.education.entity.Users;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;

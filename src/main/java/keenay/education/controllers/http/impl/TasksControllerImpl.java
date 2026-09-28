@@ -10,10 +10,8 @@ import keenay.education.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,96 +20,79 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
+@PreAuthorize("hasAuthority('ROLE_customer')")
 public class TasksControllerImpl implements TaskController {
 
     private final TaskService taskService;
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @PreAuthorize("hasAuthority('ROLE_customer')")
-    public ResponseEntity<TaskDTO> createTask(
+    public TaskDTO createTask(
             @AuthenticationPrincipal CustomUserDetail customUserDetail,
             @Valid @ModelAttribute TaskBodyDTO taskBodyDTO,
             @RequestPart(value = "file", required = false) MultipartFile file
     ) {
-        return ResponseEntity.ok(taskService.createTask(customUserDetail, taskBodyDTO, file));
+        return taskService.createTask(customUserDetail, taskBodyDTO, file);
     }
 
-    @Override
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('ROLE_customer')")
-    public ResponseEntity<TaskDTO> getTask(
+    public TaskDTO getTask(
             @AuthenticationPrincipal CustomUserDetail customUserDetail,
-            @PathVariable("id")  Long id
+            @PathVariable Long id
     ) {
-        return ResponseEntity.ok(taskService.getTask(customUserDetail, id));
+        return taskService.getTask(customUserDetail, id);
     }
 
-    @Override
     @GetMapping
-    @PreAuthorize("hasAuthority('ROLE_customer')")
-    public ResponseEntity<List<TaskDTO>> getAvailTasks(@AuthenticationPrincipal CustomUserDetail customUserDetail) {
-        return ResponseEntity.ok(taskService.getAvailTasks(customUserDetail));
+    public List<TaskDTO> getAvailTasks(@AuthenticationPrincipal CustomUserDetail customUserDetail) {
+        return taskService.getAvailTasks(customUserDetail);
     }
 
-    @Override
     @GetMapping("/created")
-    @PreAuthorize("hasAuthority('ROLE_customer')")
-    public ResponseEntity<List<TaskDTO>> getCreatedTasks(@AuthenticationPrincipal CustomUserDetail customUserDetail) {
-        return ResponseEntity.ok(taskService.getCreatedTasks(customUserDetail));
+    public List<TaskDTO> getCreatedTasks(@AuthenticationPrincipal CustomUserDetail customUserDetail) {
+        return taskService.getCreatedTasks(customUserDetail);
     }
 
-    @Override
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('ROLE_customer')")
-    public ResponseEntity<TaskDTO> updateTask(
+    public TaskDTO updateTask(
             @AuthenticationPrincipal CustomUserDetail customUserDetail,
-            @PathVariable("id") Long id,
+            @PathVariable Long id,
             @Valid @RequestBody TaskBodyDTO taskBodyDTO
     ) {
-        return ResponseEntity.ok(taskService.updateTask(customUserDetail, id, taskBodyDTO));
+        return taskService.updateTask(customUserDetail, id, taskBodyDTO);
     }
 
-    @Override
     @PutMapping(value = "/photo/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @PreAuthorize("hasAuthority('ROLE_customer')")
-    public ResponseEntity<TaskDTO> updatePhotoTask(
+    public TaskDTO updatePhotoTask(
             @AuthenticationPrincipal CustomUserDetail customUserDetail,
-            @PathVariable("id") Long id,
+            @PathVariable Long id,
             @RequestParam("file") MultipartFile photo
     ) {
-        return ResponseEntity.ok(taskService.updatePhotoTask(customUserDetail, id, photo));
+        return taskService.updatePhotoTask(customUserDetail, id, photo);
     }
 
-    @Override
     @PutMapping("/status/{id}")
-    @PreAuthorize("hasAuthority('ROLE_customer')")
-    public ResponseEntity<TaskDTO> updateTaskStatus(
+    public TaskDTO updateTaskStatus(
             @AuthenticationPrincipal CustomUserDetail customUserDetail,
-            @PathVariable("id") Long id,
+            @PathVariable Long id,
             @Valid @RequestBody TaskBodyStatusDTO taskBodyStatusDTO
     ) {
-        return ResponseEntity.ok(taskService.updateTaskStatus(customUserDetail, id, taskBodyStatusDTO));
+        return taskService.updateTaskStatus(customUserDetail, id, taskBodyStatusDTO);
     }
 
-    @Override
     @PostMapping("/{id}/advertisement/{advertisementId}")
-    @PreAuthorize("hasAuthority('ROLE_customer')")
-    public ResponseEntity<TaskDTO> setAdvertisement(
+    public TaskDTO setAdvertisement(
             @AuthenticationPrincipal CustomUserDetail customUserDetail,
-            @PathVariable("id") Long id,
-            @PathVariable("advertisementId") Long advertisementId
+            @PathVariable Long id,
+            @PathVariable Long advertisementId
     ) {
-        return ResponseEntity.ok(taskService.setAdvertisement(customUserDetail, id, advertisementId));
+        return taskService.setAdvertisement(customUserDetail, id, advertisementId);
     }
 
-    @Override
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('ROLE_customer')")
-    public ResponseEntity<Void> deleteTask(
+    public void deleteTask(
             @AuthenticationPrincipal CustomUserDetail customUserDetail,
-            @PathVariable("id") Long id
+            @PathVariable Long id
     ) {
         taskService.deleteTask(customUserDetail, id);
-        return ResponseEntity.noContent().build();
     }
 }

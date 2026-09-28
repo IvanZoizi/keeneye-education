@@ -32,10 +32,10 @@ public class SupportServiceImpl implements SupportService {
 
     @Override
     public TicketWithAnswerDTO createTicket(CustomUserDetail customUserDetail, TicketBodyDTO ticketBodyDTO) {
-        Ticket ticket = new Ticket();
-        ticket.setQuestion(ticketBodyDTO.getQuestion());
-        ticket.setSender(customUserDetail.getUser());
-        ticket.setAdmin(null);
+        Ticket ticket = Ticket.builder()
+                .question(ticketBodyDTO.getQuestion())
+                .sender(customUserDetail.getUser())
+                .build();
         return mapperService.getTicketWithAnswerDTO(ticketRepository.save(ticket));
     }
 
@@ -50,9 +50,10 @@ public class SupportServiceImpl implements SupportService {
     public TicketWithAnswerDTO answerForTicket(CustomUserDetail customUserDetail, Long id, TicketAnswerBodyDTO ticketAnswerBodyDTO) {
         Ticket ticket = ticketRepository.findById(id)
                 .orElseThrow(() -> new TicketHasNotBeenCreatedException("The ticket was not found."));
-        TicketReplies ticketReplies = new TicketReplies();
-        ticketReplies.setAnswer(ticketAnswerBodyDTO.getAnswer());
-        ticketReplies.setTicket(ticket);
+        TicketReplies ticketReplies = TicketReplies.builder()
+                .answer(ticketAnswerBodyDTO.getAnswer())
+                .ticket(ticket)
+                .build();
         ticketRepliesRepository.save(ticketReplies);
         ticket.setAdmin(customUserDetail.getUser());
         return mapperService.getTicketWithAnswerDTO(ticketRepository.save(ticket));

@@ -5,12 +5,10 @@ import keenay.education.controllers.http.AdvertisementController;
 import keenay.education.dto.advertisement.AdvertisementBodyDTO;
 import keenay.education.dto.advertisement.AdvertisementBodyStatusDTO;
 import keenay.education.dto.advertisement.AdvertisementDTO;
-import keenay.education.dto.support.TicketBodyDTO;
 import keenay.education.security.CustomUserDetail;
 import keenay.education.service.AdvertisementService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -21,90 +19,89 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class AdvertisementControllerImpl implements AdvertisementController {
+
     private final AdvertisementService advertisementService;
 
     @PostMapping
     @PreAuthorize("hasAuthority('ROLE_customer')")
-    public ResponseEntity<AdvertisementDTO> createAdvertisement(
+    public AdvertisementDTO createAdvertisement(
             @AuthenticationPrincipal CustomUserDetail userDetail,
             @Valid @RequestBody AdvertisementBodyDTO advertisementBodyDTO
     ) {
-        return ResponseEntity.ok(advertisementService.createAdvertisement(userDetail, advertisementBodyDTO));
+        return advertisementService.createAdvertisement(userDetail, advertisementBodyDTO);
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ROLE_customer')")
-    public ResponseEntity<AdvertisementDTO> getAdvertisement(
+    public AdvertisementDTO getAdvertisement(
             @AuthenticationPrincipal CustomUserDetail userDetail,
-            @PathVariable("id") Long id
+            @PathVariable Long id
     ) {
-        return ResponseEntity.ok(advertisementService.getAdvertisement(userDetail, id));
+        return advertisementService.getAdvertisement(userDetail, id);
     }
 
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_customer')")
-    public ResponseEntity<List<AdvertisementDTO>> getAdvertisements(
+    public List<AdvertisementDTO> getAdvertisements(
             @AuthenticationPrincipal CustomUserDetail userDetail
     ) {
-        return ResponseEntity.ok(advertisementService.getAdvertisements(userDetail));
+        return advertisementService.getAdvertisements(userDetail);
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('ROLE_customer')")
-    public ResponseEntity<Void> deleteAdvertisement(
+    public void deleteAdvertisement(
             @AuthenticationPrincipal CustomUserDetail userDetail,
-            @PathVariable("id") Long id
+            @PathVariable Long id
     ) {
         advertisementService.deleteAdvertisement(userDetail, id);
-        return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/{id}/task/{taskId}")
     @PreAuthorize("hasAuthority('ROLE_customer')")
-    public ResponseEntity<AdvertisementDTO> addTask(
+    public AdvertisementDTO addTask(
             @AuthenticationPrincipal CustomUserDetail userDetail,
-            @PathVariable("id") Long id,
-            @PathVariable("taskId") Long taskId
+            @PathVariable Long id,
+            @PathVariable Long taskId
     ) {
-        return ResponseEntity.ok(advertisementService.addTask(userDetail, id, taskId));
+        return advertisementService.addTask(userDetail, id, taskId);
     }
 
     @DeleteMapping("/{id}/task/{taskId}")
     @PreAuthorize("hasAuthority('ROLE_customer')")
-    public ResponseEntity<AdvertisementDTO> deleteTask(
+    public AdvertisementDTO deleteTask(
             @AuthenticationPrincipal CustomUserDetail userDetail,
-            @PathVariable("id") Long id,
-            @PathVariable("taskId") Long taskId
+            @PathVariable Long id,
+            @PathVariable Long taskId
     ) {
-        return ResponseEntity.ok(advertisementService.deleteTask(userDetail, id, taskId));
+        return advertisementService.deleteTask(userDetail, id, taskId);
     }
 
-    // TODO проверить код
     @PutMapping("/status/{id}")
     @PreAuthorize("hasAuthority('ROLE_customer')")
-    public ResponseEntity<AdvertisementDTO> updateStatus(
+    public AdvertisementDTO updateStatus(
             @AuthenticationPrincipal CustomUserDetail userDetail,
-            @PathVariable("id") Long id,
+            @PathVariable Long id,
             @Valid @RequestBody AdvertisementBodyStatusDTO advertisementBodyStatusDTO
     ) {
-        return ResponseEntity.ok(advertisementService.updateStatus(userDetail, id, advertisementBodyStatusDTO));
+        return advertisementService.updateStatus(userDetail, id, advertisementBodyStatusDTO);
     }
 
     @PutMapping("/{id}/response/{responseId}")
     @PreAuthorize("hasAuthority('ROLE_customer')")
-    public ResponseEntity<AdvertisementDTO> setResponse(
+    public AdvertisementDTO setResponse(
             @AuthenticationPrincipal CustomUserDetail userDetail,
-            @PathVariable("id") Long id,
-            @PathVariable("responseId") Long responseId
+            @PathVariable Long id,
+            @PathVariable Long responseId
     ) {
-        return ResponseEntity.ok(advertisementService.setResponse(userDetail, id, responseId));
+        return advertisementService.setResponse(userDetail, id, responseId);
     }
 
     @GetMapping("/by/skill")
     @PreAuthorize("hasAuthority('ROLE_seller')")
-    public ResponseEntity<List<AdvertisementDTO>> getAdvertisementBySkills(
+    public List<AdvertisementDTO> getAdvertisementBySkills(
             @AuthenticationPrincipal CustomUserDetail userDetail
     ) {
-        return ResponseEntity.ok(advertisementService.getAdvertisementBySkills(userDetail));
+        return advertisementService.getAdvertisementBySkills(userDetail);
     }
 }

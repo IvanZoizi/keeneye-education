@@ -1,6 +1,7 @@
 package keenay.education.config;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.support.converter.JacksonJsonMessageConverter;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,16 +14,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Configuration
 public class RabbitMqConfig {
 
-    @Value("${rabbitmq.queue.name}")
-    private String nameQueue;
-
-    @Value("${rabbitmq.queue.name-retry}")
-    private String nameQueueRetry;
-
-    @Value("${rabbitmq.queue.name-exception}")
-    private String nameQueueException;
-
     public static final String EMAIL_EXCHANGE = "email.exchange";
+
+    private final String nameQueue;
+    private final String nameQueueRetry;
+    private final String nameQueueException;
+    private final Integer timeRetry;
+
+    public RabbitMqConfig(
+            @Value("${rabbitmq.queue.name}") String nameQueue,
+            @Value("${rabbitmq.queue.name-retry}") String nameQueueRetry,
+            @Value("${rabbitmq.queue.name-exception}") String nameQueueException,
+            @Value("${rabbitmq.queue.time-retry}") Integer timeRetry
+    ) {
+        this.nameQueue = nameQueue;
+        this.nameQueueRetry = nameQueueRetry;
+        this.nameQueueException = nameQueueException;
+        this.timeRetry = timeRetry;
+    }
 
     @Bean
     public TopicExchange emailExchange() {
@@ -37,7 +46,7 @@ public class RabbitMqConfig {
     @Bean
     public Queue emailRetryQueue() {
         return QueueBuilder.durable(nameQueueRetry)
-                .withArgument("x-message-ttl", 30000)
+                .withArgument("x-message-ttl", timeRetry)
                 .build();
     }
 

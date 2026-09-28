@@ -28,11 +28,12 @@ public class AdvertisementResponseServiceImpl implements AdvertisementResponseSe
 
     private AdvertisementResponse create(CustomUserDetail customUserDetail, Advertisement advertisement,
                                          AdvertisementResponseBodyDTO advertisementResponseBodyDTO) {
-        AdvertisementResponse advertisementResponse = new AdvertisementResponse();
-        advertisementResponse.setSeller(customUserDetail.getUser().getSeller());
-        advertisementResponse.setPrice(advertisementResponseBodyDTO.getPrice());
-        advertisementResponse.setAdvertisement(advertisement);
-        advertisementResponse.setComment(advertisementResponseBodyDTO.getComment());
+        AdvertisementResponse advertisementResponse = AdvertisementResponse.builder()
+                .seller(customUserDetail.getUser().getSeller())
+                .price(advertisementResponseBodyDTO.getPrice())
+                .advertisement(advertisement)
+                .comment(advertisementResponseBodyDTO.getComment())
+                .build();
         return advertisementResponseRepository.save(advertisementResponse);
     }
 

@@ -5,6 +5,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.NotNull;
+import keenay.education.cache.UserDetailCache;
 import keenay.education.security.CustomUserDetail;
 import keenay.education.service.impl.CustomUserServiceImpl;
 import lombok.AllArgsConstructor;
@@ -21,7 +22,7 @@ import java.io.IOException;
 public class JwtFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
-    private final CustomUserServiceImpl userService;
+    private final UserDetailCache userDetailCache;
 
     @Override
     protected void doFilterInternal(@NotNull HttpServletRequest request,
@@ -36,7 +37,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private void setCustomUserDetailsToSecurityContextHolder(String token) {
         String login = jwtService.getLoginFromToken(token);
-        CustomUserDetail customUserDetails = userService.getUserByEmail(login);
+        CustomUserDetail customUserDetails = userDetailCache.getCustomUserDetail(login);
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(customUserDetails,
                 null, customUserDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);

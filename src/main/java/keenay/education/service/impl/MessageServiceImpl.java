@@ -32,10 +32,11 @@ public class MessageServiceImpl implements MessageService {
     private final ChatMapper chatMapper;
 
     private Messages create(Chat chat, ChatMessageBodyDTO chatMessageBodyDTO, Users user) {
-        Messages message = new Messages();
-        message.setChat(chat);
-        message.setText(chatMessageBodyDTO.getText());
-        message.setSender(user);
+        Messages message = Messages.builder()
+                .chat(chat)
+                .text(chatMessageBodyDTO.getText())
+                .sender(user)
+                .build();
         if (chat.getCustomer().getId().equals(user.getId())) {
             message.setRole(rolesRepository.findByRole("customer")
                     .orElseThrow());

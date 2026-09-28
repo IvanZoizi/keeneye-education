@@ -1,6 +1,8 @@
 package keenay.education.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -12,6 +14,8 @@ import java.time.LocalDateTime;
 @Data
 @Table(name = "skills")
 @NoArgsConstructor
+@Builder
+@AllArgsConstructor
 public class Skills {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY )

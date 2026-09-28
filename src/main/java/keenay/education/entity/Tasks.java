@@ -2,6 +2,8 @@ package keenay.education.entity;
 
 import jakarta.persistence.*;
 import keenay.education.entity.status.TasksStatus;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -13,6 +15,8 @@ import java.time.LocalDateTime;
 @Data
 @Table(name = "tasks")
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Tasks {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY )

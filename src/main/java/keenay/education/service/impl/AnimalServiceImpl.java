@@ -22,8 +22,7 @@ public class AnimalServiceImpl implements AnimalService {
 
     @Override
     public AnimalDTO createAnimal(AnimalBodyDTO animalDTO) {
-        Animals animal = new Animals();
-        animal.setName(animalDTO.getName());
+        Animals animal = new Animals(animalDTO.getName());
         return mapper.getAnimal(animalsRepository.save(animal));
     }
 

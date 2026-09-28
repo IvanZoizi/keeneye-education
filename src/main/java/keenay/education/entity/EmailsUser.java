@@ -18,9 +18,12 @@ public class EmailsUser {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(referencedColumnName = "id", name = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private Users user;
+
+    @Column(name = "user_id")
+    private Long userId;
 
     @Column(name = "text")
     private String text;

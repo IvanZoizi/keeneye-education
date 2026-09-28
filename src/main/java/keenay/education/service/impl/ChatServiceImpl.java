@@ -36,9 +36,10 @@ public class ChatServiceImpl implements ChatService {
     private final MessagesRepository messagesRepository;
 
     private Chat create(Users customer, Users seller) {
-        Chat chat = new Chat();
-        chat.setCustomer(customer);
-        chat.setSeller(seller);
+        Chat chat = Chat.builder()
+                .customer(customer)
+                .seller(seller)
+                .build();
         return chatRepository.save(chat);
     }
 

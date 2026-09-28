@@ -34,18 +34,22 @@ public class PetsServiceImpl implements PetsService {
     private final AnimalsRepository animalsRepository;
     private final PetsMapper mapperService;
 
-    private Pets createPets(Pets pets, PetsBodyDTO petsBodyDTO, Customers customer, Animals animal) {
-        pets.setAnimal(animal);
-        pets.setCustomer(customer);
-        pets.setName(petsBodyDTO.getNamePet());
+    private Pets createPets(PetsBodyDTO petsBodyDTO, Customers customer, Animals animal) {
+        Pets pets = Pets.builder()
+                .animal(animal)
+                .customer(customer)
+                .name(petsBodyDTO.getNamePet())
+                .build();
         return petsRepository.save(pets);
     }
 
-    private PetsProfile createPetsProfile(PetsProfile petsProfile, PetsBodyDTO petsBodyDTO, Pets pet) {
-        petsProfile.setPet(pet);
-        petsProfile.setBreed(petsBodyDTO.getBreed());
-        petsProfile.setFeatures(petsBodyDTO.getFeatures());
-        petsProfile.setVaccinations(petsBodyDTO.getVaccinations());
+    private PetsProfile createPetsProfile(PetsBodyDTO petsBodyDTO, Pets pet) {
+        PetsProfile petsProfile = PetsProfile.builder()
+                .pet(pet)
+                .breed(petsBodyDTO.getBreed())
+                .features(petsBodyDTO.getFeatures())
+                .vaccinations(petsBodyDTO.getVaccinations())
+                .build();
         return petsProfileRepository.save(petsProfile);
     }
 
@@ -55,9 +59,8 @@ public class PetsServiceImpl implements PetsService {
         Customers customers = userDetail.getUser().getCustomer();
         Animals animal = animalsRepository.findByName(petsBodyDTO.getNameAnimal())
                 .orElseThrow(() -> new AnimalIsNotSupported("This animal is not handled in our service."));
-        Pets pets = new Pets();
-        pets = createPets(pets, petsBodyDTO, customers, animal);
-        pets.setPetsProfile(createPetsProfile(new PetsProfile(), petsBodyDTO, pets));
+        Pets pets = createPets(petsBodyDTO, customers, animal);
+        pets.setPetsProfile(createPetsProfile(petsBodyDTO, pets));
         return mapperService.getPets(pets);
     }
 
