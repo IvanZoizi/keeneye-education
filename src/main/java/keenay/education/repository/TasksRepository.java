@@ -27,8 +27,8 @@ public interface TasksRepository extends JpaRepository<Tasks, Long> {
 
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM tasks WHERE id = :id AND client_id = :customer_id", nativeQuery = true)
-    void delete(@Param("id") Long id, @Param("customer_id") Long customerId);
+    @Query(value = "DELETE FROM tasks WHERE id = :id AND client_id = :customer_id RETURNING *", nativeQuery = true)
+    List<Tasks> delete(@Param("id") Long id, @Param("customer_id") Long customerId);
 
     @Modifying
     @Transactional

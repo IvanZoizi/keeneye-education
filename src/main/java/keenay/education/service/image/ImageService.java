@@ -2,6 +2,8 @@ package keenay.education.service.image;
 
 import io.minio.*;
 import io.minio.errors.MinioException;
+import keenay.education.exception.errors.ImageDeleteException;
+import keenay.education.exception.errors.ImageUploadException;
 import keenay.education.security.CustomUserDetail;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,10 +17,20 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 @Slf4j
-@RequiredArgsConstructor
 public class ImageService {
     private final MinioClient minioClient;
-    @Value("${minio.bucket-name}") private String bucketName;
+    private final String bucketName;
+    private final Integer days;
+
+    public ImageService(
+            MinioClient minioClient,
+            @Value("${minio.bucket-name}") String bucketName,
+            @Value("${minio.day-life}") int days
+    ) {
+        this.minioClient = minioClient;
+        this.bucketName = bucketName;
+        this.days = days;
+    }
 
     public String uploadPhoto(MultipartFile photo, CustomUserDetail customUserDetail) {
         try {
@@ -39,8 +51,7 @@ public class ImageService {
             );
             return objectName;
         } catch (Exception exception) {
-            log.error(String.valueOf(exception));
-            return null;
+            throw new ImageUploadException("Failed to upload photo");
         }
 
     }
@@ -52,15 +63,23 @@ public class ImageService {
                             .method(Http.Method.GET)
                             .bucket(bucketName)
                             .object(photoName)
-                            .expiry(7, TimeUnit.DAYS)
+                            .expiry(days, TimeUnit.DAYS)
                             .build()
             );
-        } catch (MinioException exception) {
-            log.error(String.valueOf(exception));
-            return null;  // Подумать что возвращать и в первом и этом методе
         } catch (Exception exception) {
-            log.error(String.valueOf(exception));
-            return null; // Тутт оде
+            throw new ImageUploadException("Failed to upload photo");
+        }
+    }
+    public void deletePhoto(String objectName) {
+        try {
+            minioClient.removeObject(
+                    RemoveObjectArgs.builder()
+                            .bucket(bucketName)
+                            .object(objectName)
+                            .build()
+            );
+        } catch (Exception e) {
+            throw new ImageDeleteException("Failed to delete photo");
         }
     }
 }

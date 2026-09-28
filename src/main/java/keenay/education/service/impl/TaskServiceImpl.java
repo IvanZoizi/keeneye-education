@@ -19,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -34,15 +35,12 @@ public class TaskServiceImpl implements TaskService {
     private final AdvertisementRepository advertisementRepository;
 
     private Tasks createTaskWithPhoto(CustomUserDetail userDetail, TaskBodyDTO taskBodyDTO, MultipartFile photo) {
-        Tasks task = new Tasks();
-        task.setCustomer(userDetail.getUser().getCustomer());
-        task.setTitle(taskBodyDTO.getTitle());
-        task.setDescription(taskBodyDTO.getDescription());
-        System.out.println(photo);
-        System.out.println(photo.isEmpty());
-        if (!photo.isEmpty()) {
-            task.setPhotoUrl(imageService.uploadPhoto(photo, userDetail));
-        }
+        Tasks task = Tasks.builder()
+                .customer(userDetail.getUser().getCustomer())
+                .title(taskBodyDTO.getTitle())
+                .description(taskBodyDTO.getDescription())
+                .photoUrl(!photo.isEmpty()?imageService.uploadPhoto(photo, userDetail):null)
+                .build();
         return tasksRepository.save(task);
     }
 
@@ -85,14 +83,18 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    @Transactional
     public TaskDTO updatePhotoTask(CustomUserDetail customUserDetail, Long id, MultipartFile photo) {
-        Tasks task = tasksRepository.findByIdAndCustomer_Id(id, customUserDetail.getUser().getCustomer().getId())
+        Tasks pasted = tasksRepository.findByIdAndCustomer_Id(id, customUserDetail.getUser().getCustomer().getId())
                 .orElseThrow(() -> new TaskNotFoundException("This task is not found."));
-        // TODO: написать удаление прошлого файла
+
         String photoUrl = imageService.uploadPhoto(photo, customUserDetail);
-        task = tasksRepository.updateTaskPhoto(id, customUserDetail.getUser().getCustomer().getId(),
+        Tasks updated = tasksRepository.updateTaskPhoto(id, customUserDetail.getUser().getCustomer().getId(),
                 photoUrl).get(0);
-        return taskMapper.getDTO(task);
+        if (!pasted.getPhotoUrl().isEmpty()) {
+            imageService.deletePhoto(pasted.getPhotoUrl());
+        }
+        return taskMapper.getDTO(updated);
     }
 
     @Override
@@ -133,6 +135,11 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void deleteTask(CustomUserDetail customUserDetail, Long id) {
-        tasksRepository.delete(id, customUserDetail.getUser().getCustomer().getId());
+        List<Tasks> tasks = tasksRepository.delete(id, customUserDetail.getUser().getCustomer().getId());
+        for (Tasks task : tasks) {
+            if (!task.getPhotoUrl().isEmpty()) {
+                imageService.deletePhoto(task.getPhotoUrl());
+            }
+        }
     }
 }

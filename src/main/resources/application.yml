@@ -69,6 +69,7 @@ minio:
   access-key: admin
   secret-key: 1234567890
   bucket-name: bucket
+  day-life: 7
 
 logging:
   level:
