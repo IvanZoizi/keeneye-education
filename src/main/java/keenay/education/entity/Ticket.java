@@ -23,12 +23,18 @@ public class Ticket {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(referencedColumnName = "id", name = "admin_id")
+    @JoinColumn(referencedColumnName = "id", name = "admin_id", insertable = false, updatable = false)
     private Users admin = null;
 
+    @Column(name = "admin_id")
+    private Long adminId;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(referencedColumnName = "id", name = "sender_id")
+    @JoinColumn(referencedColumnName = "id", name = "sender_id", insertable = false, updatable = false)
     private Users sender;
+
+    @Column(name = "sender_id")
+    private Long senderId;
 
     @Column(name = "question")
     private String question;

@@ -7,8 +7,8 @@ import keenay.education.entity.Animals;
 import keenay.education.entity.Skills;
 import keenay.education.exception.errors.*;
 import keenay.education.mapper.skills.SkillMapper;
-import keenay.education.repository.AnimalsRepository;
-import keenay.education.repository.SkillsRepository;
+import keenay.education.repository.jpa.AnimalsRepository;
+import keenay.education.repository.jpa.SkillsRepository;
 import keenay.education.security.CustomUserDetail;
 import keenay.education.service.SkillsService;
 import lombok.RequiredArgsConstructor;
@@ -34,28 +34,28 @@ public class SkillsServiceImpl implements SkillsService {
                 .title(skillsBodyDTO.getTitle())
                 .description(skillsBodyDTO.getDescription())
                 .animal(animal)
-                .seller(userDetail.getUser().getSeller())
+                .sellerId(userDetail.getSellerId())
                 .build();
         return mapperService.getSkill(skillsRepository.save(skill));
     }
 
     @Override
     public List<SkillsDTO> getSkills(CustomUserDetail userDetail) {
-        return skillsRepository.findAllBySeller_Id(userDetail.getUser().getSeller().getId()).stream()
+        return skillsRepository.findAllBySeller_Id(userDetail.getSellerId()).stream()
                 .map(mapperService::getSkill)
                 .toList();
     }
 
     @Override
     public SkillsDTO getSkill(CustomUserDetail userDetail, Long id) {
-        Skills skill = skillsRepository.findAllByIdAndSeller_Id(id, userDetail.getUser().getSeller().getId())
+        Skills skill = skillsRepository.findAllByIdAndSeller_Id(id, userDetail.getSellerId())
                 .orElseThrow(() -> new SkillNotFoundException("This skill has not been found."));
         return mapperService.getSkill(skill);
     }
 
     @Override
     public SkillsDTO updateSkill(CustomUserDetail userDetail, Long id, SkillsPutBodyDTO skillsPutBodyDTO) {
-        List<Skills> skills = skillsRepository.update(id, userDetail.getUser().getSeller().getId(),
+        List<Skills> skills = skillsRepository.update(id, userDetail.getSellerId(),
                 skillsPutBodyDTO.getTitle(), skillsPutBodyDTO.getDescription());
         if (skills.isEmpty()) {
             throw new SkillsNotFoundException("This skill was not found.");
@@ -65,6 +65,6 @@ public class SkillsServiceImpl implements SkillsService {
 
     @Override
     public void deleteSkill(CustomUserDetail userDetail, Long id) {
-        skillsRepository.deleteAndReturning(id, userDetail.getUser().getSeller().getId());
+        skillsRepository.deleteAndReturning(id, userDetail.getSellerId());
     }
 }

@@ -4,20 +4,18 @@ import keenay.education.dto.advertisement.AdvertisementBodyDTO;
 import keenay.education.dto.advertisement.AdvertisementBodyStatusDTO;
 import keenay.education.dto.advertisement.AdvertisementDTO;
 import keenay.education.dto.advertisement_response.AdvertisementResponseBodyStatusDTO;
-import keenay.education.dto.advertisement_response.AdvertisementResponseDTO;
 import keenay.education.entity.*;
 import keenay.education.entity.status.AdvertisementResponseStatus;
 import keenay.education.entity.status.AdvertisementStatus;
 import keenay.education.exception.errors.*;
 import keenay.education.mapper.advertisement.AdvertisementMapper;
-import keenay.education.repository.AdvertisementRepository;
-import keenay.education.repository.AdvertisementResponseRepository;
-import keenay.education.repository.PetsRepository;
-import keenay.education.repository.TasksRepository;
+import keenay.education.repository.jpa.AdvertisementRepository;
+import keenay.education.repository.jpa.AdvertisementResponseRepository;
+import keenay.education.repository.jpa.PetsRepository;
+import keenay.education.repository.jpa.TasksRepository;
 import keenay.education.security.CustomUserDetail;
 import keenay.education.service.AdvertisementResponseService;
 import keenay.education.service.AdvertisementService;
-import keenay.education.service.PetsService;
 import keenay.education.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,11 +37,11 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     private final AdvertisementResponseRepository advertisementResponseRepository;
     private final AdvertisementResponseService advertisementResponseService;
 
-    private Advertisement createAdvertisementWithEntity(Customers customer, Pets pet,
+    private Advertisement createAdvertisementWithEntity(Long customerId,
                                                         AdvertisementBodyDTO advertisementBodyDTO) {
         Advertisement advertisement = Advertisement.builder()
-                .pet(pet)
-                .customer(customer)
+                .petId(advertisementBodyDTO.getPetId())
+                .customerId(customerId)
                 .budget(advertisementBodyDTO.getBudget())
                 .build();
         return advertisementRepository.save(advertisement);
@@ -52,11 +50,9 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     @Override
     @Transactional
     public AdvertisementDTO createAdvertisement(CustomUserDetail customUserDetail, AdvertisementBodyDTO advertisementBodyDTO) {
-        Pets pet = petsRepository.findByIdAndUserId(advertisementBodyDTO.getPetId(),
-                        customUserDetail.getUser().getId())
-                .orElseThrow(() -> new PetsNotFoundException("This pet is not found."));
-        Advertisement advertisement = createAdvertisementWithEntity(customUserDetail.getUser().getCustomer(),
-                pet, advertisementBodyDTO);
+        Advertisement advertisement = createAdvertisementWithEntity(
+                customUserDetail.getCustomerId(),
+                advertisementBodyDTO);
         for (Long taskId : advertisementBodyDTO.getListTasksId()) {
             taskService.setAdvertisement(customUserDetail, taskId, advertisement.getId());
         }
@@ -68,13 +64,13 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     public AdvertisementDTO getAdvertisement(CustomUserDetail customUserDetail, Long id) {
         return advertisementMapper.getDTO(
                 advertisementRepository.findByIdAndCustomer_Id(id,
-                                customUserDetail.getUser().getCustomer().getId())
+                                customUserDetail.getCustomerId())
                         .orElseThrow(() -> new AdvertisementNotFoundException("Advertisement is not found.")));
     }
 
     @Override
     public List<AdvertisementDTO> getAdvertisements(CustomUserDetail customUserDetail) {
-        return advertisementRepository.findAllByCustomer_Id(customUserDetail.getUser().getCustomer().getId())
+        return advertisementRepository.findAllByCustomer_Id(customUserDetail.getCustomerId())
                 .stream()
                 .map(advertisementMapper::getDTO)
                 .toList();
@@ -83,7 +79,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     @Override
     @Transactional
     public void deleteAdvertisement(CustomUserDetail customUserDetail, Long id) {
-        advertisementRepository.delete(id, customUserDetail.getUser().getCustomer().getId());
+        advertisementRepository.delete(id, customUserDetail.getCustomerId());
     }
 
     @Override
@@ -111,7 +107,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     @Override
     public AdvertisementDTO updateStatus(CustomUserDetail customUserDetail, Long id, AdvertisementBodyStatusDTO advertisementBodyStatusDTO) {
         List<Advertisement> advertisements = advertisementRepository.updateStatus(
-                id, customUserDetail.getUser().getCustomer().getId(), advertisementBodyStatusDTO.getStatus().name());
+                id, customUserDetail.getCustomerId(), advertisementBodyStatusDTO.getStatus().name());
         if (advertisements.isEmpty()) {
             throw new AdvertisementNotFoundException("Advertisement is not found.");
         }
@@ -122,9 +118,8 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     @Transactional
     public AdvertisementDTO setResponse(CustomUserDetail customUserDetail, Long id, Long responseId) {
         AdvertisementResponse advertisementResponse = advertisementResponseRepository.findByIdAndSeller_Id(
-                responseId, customUserDetail.getUser().getSeller().getId()
+                responseId, customUserDetail.getSellerId()
         ).orElseThrow(() -> new AdvertisementResponseNotFoundException("Advertisement response is not found."));
-        System.out.println(advertisementResponse.getStatus());
         if (advertisementResponse.getStatus() != AdvertisementResponseStatus.CREATED) {
             throw new AdvertisementResponseBusyException("Advertisement response is busy.");
         }
@@ -132,7 +127,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
                 customUserDetail, responseId,
                 new AdvertisementResponseBodyStatusDTO(AdvertisementResponseStatus.SELECTED));
         Advertisement advertisement = advertisementRepository.findByIdAndCustomer_Id(id,
-                        customUserDetail.getUser().getCustomer().getId())
+                        customUserDetail.getCustomerId())
                 .orElseThrow(() -> new AdvertisementNotFoundException("Advertisement is not found."));
         for (AdvertisementResponse response : advertisement.getResponses()) {
             advertisementResponseService.updateStatus(
@@ -144,7 +139,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 
     @Override
     public List<AdvertisementDTO> getAdvertisementBySkills(CustomUserDetail customUserDetail) {
-        return advertisementRepository.findAdvertisementBySkills(customUserDetail.getUser().getSeller().getId()).stream()
+        return advertisementRepository.findAdvertisementBySkills(customUserDetail.getSellerId()).stream()
                 .map(advertisementMapper::getDTO)
                 .toList();
     }

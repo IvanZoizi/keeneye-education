@@ -19,8 +19,11 @@ public class Reviews {
     private Long id;
 
     @OneToOne
-    @JoinColumn(referencedColumnName = "id", name = "advertisement_id")
+    @JoinColumn(referencedColumnName = "id", name = "advertisement_id", insertable = false, updatable = false)
     private Advertisement advertisement;
+
+    @Column(name = "advertisement_id")
+    private Long advertisementId;
 
     @Column(name = "score")
     private Integer score;

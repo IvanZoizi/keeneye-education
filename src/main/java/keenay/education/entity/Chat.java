@@ -25,12 +25,18 @@ public class Chat {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(referencedColumnName = "id", name = "seller_id")
+    @JoinColumn(referencedColumnName = "id", name = "seller_id", insertable = false, updatable = false)
     private Users seller;
 
+    @Column(name = "seller_id")
+    private Long sellerId;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(referencedColumnName = "id", name = "customer_id")
+    @JoinColumn(referencedColumnName = "id", name = "customer_id", insertable = false, updatable = false)
     private Users customer;
+
+    @Column(name = "customer_id")
+    private Long customerId;
 
     @Column(name = "created_at")
     @CreationTimestamp

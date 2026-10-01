@@ -5,32 +5,30 @@ import keenay.education.dto.auth.RegisterAdminDTO;
 import keenay.education.dto.auth.RegisterCustomerDTO;
 import keenay.education.dto.auth.RegisterSellerDTO;
 import keenay.education.dto.security.JwtAutorizeToken;
-import keenay.education.entity.Customers;
-import keenay.education.entity.Roles;
-import keenay.education.entity.Sellers;
-import keenay.education.entity.Users;
+import keenay.education.entity.*;
 import keenay.education.exception.errors.InternalException;
-import keenay.education.repository.CustomersRepository;
-import keenay.education.repository.RolesRepository;
-import keenay.education.repository.SellersRepository;
-import keenay.education.repository.UserRepository;
+import keenay.education.repository.jpa.CustomersRepository;
+import keenay.education.repository.jpa.RolesRepository;
+import keenay.education.repository.jpa.SellersRepository;
+import keenay.education.repository.jpa.UserRepository;
+import keenay.education.repository.tarantool.JwtInfoRepository;
 import keenay.education.security.jwt.JwtService;
 import keenay.education.service.UserService;
 import keenay.education.service.email.EmailCreateApplicationService;
 import keenay.education.utils.UtilsService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.naming.AuthenticationException;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @Slf4j
-@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -40,6 +38,48 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final EmailCreateApplicationService emailCreateApplicationService;
+    private final JwtInfoRepository jwtInfoRepository;
+
+    private final Integer daysExpired;
+
+    public UserServiceImpl(UserRepository userRepository,
+                           RolesRepository rolesRepository,
+                           CustomersRepository customersRepository,
+                           SellersRepository sellersRepository,
+                           PasswordEncoder passwordEncoder,
+                           JwtService jwtService,
+                           EmailCreateApplicationService emailCreateApplicationService,
+                           JwtInfoRepository jwtInfoRepository,
+                           @Value("${spring.security.days}") Integer daysExpired) {
+        this.userRepository = userRepository;
+        this.rolesRepository = rolesRepository;
+        this.customersRepository = customersRepository;
+        this.sellersRepository = sellersRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
+        this.emailCreateApplicationService = emailCreateApplicationService;
+        this.jwtInfoRepository = jwtInfoRepository;
+        this.daysExpired = daysExpired;
+    }
+
+
+    private JwtAutorizeToken createJwtIngo(Users user) {
+        JwtAutorizeToken jwtAutorizeToken = jwtService.generateAuthToken(user.getEmail(), user.getRoles());
+        JwtInfo jwtInfo = JwtInfo.builder()
+                .tokenHash(UtilsService.sha256(jwtAutorizeToken.getToken()))
+                .token(jwtAutorizeToken.getToken())
+                .userId(user.getId())
+                .customerId(user.getCustomer() == null?null:user.getCustomer().getId())
+                .sellerId(user.getSeller() == null?null:user.getSeller().getId())
+                .createdAt(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC))
+                .expiredAt(LocalDateTime.now().plusDays(this.daysExpired).toEpochSecond(ZoneOffset.UTC))
+                .deletedAt(null)
+                .email(user.getEmail())
+                .password(user.getPassword())
+                .build();
+        jwtInfoRepository.save(jwtInfo);
+        return jwtAutorizeToken;
+    }
 
     private Users createUser(String email, String password, List<Roles> roles) {
         Users user = Users.builder()
@@ -60,23 +100,23 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    private Customers createCustomers(String name, String surname, Users user) throws AuthenticationException {
+    private Customers createCustomers(String name, String surname, Long userId) throws AuthenticationException {
         Customers customers = Customers.builder()
                 .name(name)
                 .surname(surname)
-                .user(user)
+                .userId(userId)
                 .build();
         return customersRepository.save(customers);
     }
 
-    private Sellers createSellers(String name, String surname, String address, String inn, String description, Users user) throws AuthenticationException {
+    private Sellers createSellers(String name, String surname, String address, String inn, String description, Long userId) throws AuthenticationException {
         Sellers seller = Sellers.builder()
                 .name(name)
                 .surname(surname)
                 .address(address)
                 .inn(inn)
                 .description(description)
-                .user(user)
+                .userId(userId)
                 .build();
         return sellersRepository.save(seller);
     }
@@ -112,7 +152,7 @@ public class UserServiceImpl implements UserService {
             this.createCustomers(
                     registerCustomerDTO.getName(),
                     registerCustomerDTO.getSurname(),
-                    user
+                    user.getId()
             );
 
         } else {
@@ -124,7 +164,7 @@ public class UserServiceImpl implements UserService {
             this.createCustomers(
                     registerCustomerDTO.getName(),
                     registerCustomerDTO.getSurname(),
-                    userRepository.save(currentUser)
+                    userRepository.save(currentUser).getId()
             );
         }
         return "success";
@@ -144,7 +184,7 @@ public class UserServiceImpl implements UserService {
                     registerSellerDTO.getAddress(),
                     registerSellerDTO.getInn(),
                     registerSellerDTO.getDescription(),
-                    user
+                    user.getId()
             );
 
         } else {
@@ -159,7 +199,7 @@ public class UserServiceImpl implements UserService {
                     registerSellerDTO.getAddress(),
                     registerSellerDTO.getInn(),
                     registerSellerDTO.getDescription(),
-                    userRepository.save(currentUser)
+                    userRepository.save(currentUser).getId()
             );
         }
         return "success";
@@ -178,7 +218,20 @@ public class UserServiceImpl implements UserService {
         if (user.getDeletedAt() != null) {
             throw new AuthenticationException("The user has been deleted.");
         }
-        emailCreateApplicationService.sendEmailFor(user, "Привет, ты вошел в аккаунт", "Вход");
-        return jwtService.generateAuthToken(user.getEmail(), user.getRoles());
+
+        return createJwtIngo(user);
+    }
+
+    @Override
+    public String logout(String token) {
+
+        String hashToken = UtilsService.sha256(token);
+
+        jwtInfoRepository.findById(hashToken).ifPresent(info -> {
+            info.setDeletedAt(LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
+            jwtInfoRepository.save(info);
+        });
+
+        return "success";
     }
 }

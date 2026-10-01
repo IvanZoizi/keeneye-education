@@ -1,0 +1,20 @@
+FROM tarantool/tarantool:3.2.0
+USER root
+
+RUN apt-get update && apt-get install -y \
+        git \
+        cmake \
+        make \
+        gcc \
+        g++ \
+        libc6-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN tt rocks install crud && tt rocks install vshard
+
+COPY tarantool/init.lua /opt/tarantool/init.lua
+COPY tarantool/config.yaml /opt/tarantool/config.yaml
+COPY tarantool/storage.lua /opt/tarantool/storage.lua
+WORKDIR /opt/tarantool
+
+USER tarantool

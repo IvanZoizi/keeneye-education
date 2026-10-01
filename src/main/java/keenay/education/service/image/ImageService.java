@@ -39,7 +39,7 @@ public class ImageService {
                 minioClient.makeBucket(MakeBucketArgs.builder().bucket(bucketName).build());
             }
             String ext = StringUtils.getFilenameExtension(photo.getOriginalFilename());
-            String objectName = "users/" + customUserDetail.getUser().getId() + "/photos/" + UUID.randomUUID()
+            String objectName = "users/" + customUserDetail.getUserId() + "/photos/" + UUID.randomUUID()
                     + (ext != null ? "." + ext : "");
             minioClient.putObject(
                     PutObjectArgs.builder()

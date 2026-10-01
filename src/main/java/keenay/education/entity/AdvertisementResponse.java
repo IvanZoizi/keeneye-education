@@ -24,12 +24,18 @@ public class AdvertisementResponse {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(referencedColumnName = "id", name = "seller_id")
+    @JoinColumn(referencedColumnName = "id", name = "seller_id", insertable = false, updatable = false)
     private Sellers seller;
 
+    @Column(name = "seller_id")
+    private Long sellerId;
+
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "advertisement_id", referencedColumnName = "id")
+    @JoinColumn(name = "advertisement_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Advertisement advertisement;
+
+    @Column(name = "advertisement_id")
+    private Long advertisementId;
 
     @Column(name = "price", nullable = false)
     private Integer price;

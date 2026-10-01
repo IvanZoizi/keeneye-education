@@ -5,6 +5,7 @@ import keenay.education.dto.auth.RegisterAdminDTO;
 import keenay.education.dto.auth.RegisterCustomerDTO;
 import keenay.education.dto.auth.RegisterSellerDTO;
 import keenay.education.dto.security.JwtAutorizeToken;
+import keenay.education.security.CustomUserDetail;
 
 import javax.naming.AuthenticationException;
 
@@ -13,4 +14,5 @@ public interface UserService {
     String registerCustomer(RegisterCustomerDTO registerCustomerDTO) throws AuthenticationException;
     String registerSeller(RegisterSellerDTO registerSellerDTO) throws AuthenticationException;
     JwtAutorizeToken singIn(LoginDTO loginDTO) throws AuthenticationException;
+    String logout(String token);
 }

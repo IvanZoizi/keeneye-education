@@ -4,17 +4,15 @@ import keenay.education.dto.pets.PetsBodyDTO;
 import keenay.education.dto.pets.PetsDTO;
 import keenay.education.dto.pets.PetsPutBodyDTO;
 import keenay.education.entity.Animals;
-import keenay.education.entity.Customers;
 import keenay.education.entity.Pets;
 import keenay.education.entity.PetsProfile;
 import keenay.education.exception.errors.AccessDeniedException;
 import keenay.education.exception.errors.AnimalIsNotSupported;
-import keenay.education.exception.errors.EntityNotFoundException;
 import keenay.education.exception.errors.PetsNotFoundException;
 import keenay.education.mapper.pets.PetsMapper;
-import keenay.education.repository.AnimalsRepository;
-import keenay.education.repository.PetsProfileRepository;
-import keenay.education.repository.PetsRepository;
+import keenay.education.repository.jpa.AnimalsRepository;
+import keenay.education.repository.jpa.PetsProfileRepository;
+import keenay.education.repository.jpa.PetsRepository;
 import keenay.education.security.CustomUserDetail;
 import keenay.education.service.PetsService;
 import lombok.RequiredArgsConstructor;
@@ -34,18 +32,18 @@ public class PetsServiceImpl implements PetsService {
     private final AnimalsRepository animalsRepository;
     private final PetsMapper mapperService;
 
-    private Pets createPets(PetsBodyDTO petsBodyDTO, Customers customer, Animals animal) {
+    private Pets createPets(PetsBodyDTO petsBodyDTO, Long customerId, Animals animal) {
         Pets pets = Pets.builder()
                 .animal(animal)
-                .customer(customer)
+                .customerId(customerId)
                 .name(petsBodyDTO.getNamePet())
                 .build();
         return petsRepository.save(pets);
     }
 
-    private PetsProfile createPetsProfile(PetsBodyDTO petsBodyDTO, Pets pet) {
+    private PetsProfile createPetsProfile(PetsBodyDTO petsBodyDTO, Long petId) {
         PetsProfile petsProfile = PetsProfile.builder()
-                .pet(pet)
+                .petId(petId)
                 .breed(petsBodyDTO.getBreed())
                 .features(petsBodyDTO.getFeatures())
                 .vaccinations(petsBodyDTO.getVaccinations())
@@ -56,35 +54,34 @@ public class PetsServiceImpl implements PetsService {
     @Override
     @Transactional
     public PetsDTO createPets(CustomUserDetail userDetail, PetsBodyDTO petsBodyDTO) {
-        Customers customers = userDetail.getUser().getCustomer();
         Animals animal = animalsRepository.findByName(petsBodyDTO.getNameAnimal())
                 .orElseThrow(() -> new AnimalIsNotSupported("This animal is not handled in our service."));
-        Pets pets = createPets(petsBodyDTO, customers, animal);
-        pets.setPetsProfile(createPetsProfile(petsBodyDTO, pets));
+        Pets pets = createPets(petsBodyDTO, userDetail.getCustomerId(), animal);
+        pets.setPetsProfile(createPetsProfile(petsBodyDTO, pets.getId()));
         return mapperService.getPets(pets);
     }
 
     @Override
     public List<PetsDTO> getListPets(CustomUserDetail userDetail) {
-        return petsRepository.findByCustomer_Id(userDetail.getUser().getId()).stream()
+        return petsRepository.findByCustomer_Id(userDetail.getUserId()).stream()
                 .map(mapperService::getPets)
                 .toList();
     }
 
     @Override
     public PetsDTO getPet(CustomUserDetail userDetail, Long id) {
-        Pets pet = petsRepository.findByIdAndUserId(id, userDetail.getUser().getId())
+        Pets pet = petsRepository.findByIdAndUserId(id, userDetail.getUserId())
                 .orElseThrow(() -> new AccessDeniedException("You cannot obtain information about this pet."));
         return mapperService.getPets(pet);
     }
 
     @Override
     public PetsDTO updatePet(CustomUserDetail userDetail, Long id, PetsPutBodyDTO petsBodyDTO) {
-        Pets pet = petsRepository.findByIdAndUserId(id, userDetail.getUser().getId())
+        Pets pet = petsRepository.findByIdAndUserId(id, userDetail.getUserId())
                 .orElseThrow(() -> new AccessDeniedException("You cannot obtain information about this pet."));
         List<PetsProfile> petsProfile = petsProfileRepository.update(
                 id,
-                userDetail.getUser().getCustomer().getId(),
+                userDetail.getCustomerId(),
                 petsBodyDTO.getBreed(),
                 petsBodyDTO.getFeatures(),
                 petsBodyDTO.getVaccinations()
@@ -98,7 +95,7 @@ public class PetsServiceImpl implements PetsService {
 
     @Override
     public void deletePet(CustomUserDetail userDetail, Long id) {
-        petsRepository.deleteByIdAndCustomer(id, userDetail.getUser().getId())
+        petsRepository.deleteByIdAndCustomer(id, userDetail.getUserId())
                 .orElseThrow(() -> new AccessDeniedException("This pet does not belong to you."));
     }
 }

@@ -6,11 +6,10 @@ import keenay.education.dto.support.TicketDTO;
 import keenay.education.dto.support.TicketWithAnswerDTO;
 import keenay.education.entity.Ticket;
 import keenay.education.entity.TicketReplies;
-import keenay.education.exception.errors.AccessDeniedException;
 import keenay.education.exception.errors.TicketHasNotBeenCreatedException;
 import keenay.education.mapper.ticket.TicketMapper;
-import keenay.education.repository.TicketRepliesRepository;
-import keenay.education.repository.TicketRepository;
+import keenay.education.repository.jpa.TicketRepliesRepository;
+import keenay.education.repository.jpa.TicketRepository;
 import keenay.education.security.CustomUserDetail;
 import keenay.education.service.SupportService;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +17,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 
 @Service
 @Slf4j
@@ -34,14 +32,14 @@ public class SupportServiceImpl implements SupportService {
     public TicketWithAnswerDTO createTicket(CustomUserDetail customUserDetail, TicketBodyDTO ticketBodyDTO) {
         Ticket ticket = Ticket.builder()
                 .question(ticketBodyDTO.getQuestion())
-                .sender(customUserDetail.getUser())
+                .senderId(customUserDetail.getUserId())
                 .build();
         return mapperService.getTicketWithAnswerDTO(ticketRepository.save(ticket));
     }
 
     @Override
     public TicketWithAnswerDTO getTicketInfo(CustomUserDetail customUserDetail, Long id) {
-        Ticket ticket = ticketRepository.findByIdAndSender_Id(id, customUserDetail.getUser().getId())
+        Ticket ticket = ticketRepository.findByIdAndSender_Id(id, customUserDetail.getUserId())
                 .orElseThrow(() -> new TicketHasNotBeenCreatedException("The ticket was not found."));
         return mapperService.getTicketWithAnswerDTO(ticket);
     }
@@ -52,10 +50,10 @@ public class SupportServiceImpl implements SupportService {
                 .orElseThrow(() -> new TicketHasNotBeenCreatedException("The ticket was not found."));
         TicketReplies ticketReplies = TicketReplies.builder()
                 .answer(ticketAnswerBodyDTO.getAnswer())
-                .ticket(ticket)
+                .ticketId(id)
                 .build();
         ticketRepliesRepository.save(ticketReplies);
-        ticket.setAdmin(customUserDetail.getUser());
+        ticket.setAdminId(customUserDetail.getUserId());
         return mapperService.getTicketWithAnswerDTO(ticketRepository.save(ticket));
     }
 

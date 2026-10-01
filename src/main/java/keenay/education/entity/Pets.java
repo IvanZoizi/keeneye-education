@@ -23,12 +23,18 @@ public class Pets {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(referencedColumnName = "id", name = "customer_id")
+    @JoinColumn(referencedColumnName = "id", name = "customer_id", insertable = false, updatable = false)
     private Customers customer;
 
+    @Column( name = "customer_id")
+    private Long customerId;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "animal_id", referencedColumnName = "id")
+    @JoinColumn(name = "animal_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Animals animal;
+
+    @Column(name = "animal_id")
+    private Long animalId;
 
     @Column(name = "name", nullable = false)
     private String name;

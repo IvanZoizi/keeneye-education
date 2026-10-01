@@ -20,31 +20,19 @@ import java.util.List;
 public class JwtService {
 
     private final String jwtSecret;
+    private final Integer daysExpired;
 
-    public JwtService(@Value("${spring.security.key}") String jwtSecret) {
+    public JwtService(@Value("${spring.security.key}") String jwtSecret,
+                      @Value("${spring.security.days}") Integer days) {
         this.jwtSecret = jwtSecret;
+        this.daysExpired = days;
     }
 
     public JwtAutorizeToken generateAuthToken(String login, List<Roles> roles) {
         List<String> roleNames = roles.stream().map(Roles::getRole).toList();
 
-        JwtAutorizeToken jwtDto = new JwtAutorizeToken();
-        jwtDto.setToken(generateJwtToken(login, roleNames));
-        jwtDto.setRefreshToken(generateRefreshToken(login, roleNames));
+        JwtAutorizeToken jwtDto = new JwtAutorizeToken(generateJwtToken(login, roleNames));
         return jwtDto;
-    }
-
-    public JwtAutorizeToken refreshToken(String refreshToken) {
-        if (!validateJwtToken(refreshToken)) {
-            return null;
-        }
-        String login = getLoginFromToken(refreshToken);
-        List<String> roles = getRolesFromToken(refreshToken);
-
-        JwtAutorizeToken jwtAutorizeToken = new JwtAutorizeToken();
-        jwtAutorizeToken.setToken(generateJwtToken(login, roles));
-        jwtAutorizeToken.setRefreshToken(generateRefreshToken(login, roles));
-        return jwtAutorizeToken;
     }
 
     public String getLoginFromToken(String token) {
@@ -57,17 +45,7 @@ public class JwtService {
     }
 
     public String generateJwtToken(String login, List<String> roles) {
-        Date date = Date.from(LocalDateTime.now().plusDays(1).atZone(ZoneId.systemDefault()).toInstant());
-        return Jwts.builder()
-                .subject(login)
-                .claim("roles", roles)
-                .expiration(date)
-                .signWith(getSigningKey())
-                .compact();
-    }
-
-    public String generateRefreshToken(String login, List<String> roles) {
-        Date date = Date.from(LocalDateTime.now().plusWeeks(1).atZone(ZoneId.systemDefault()).toInstant());
+        Date date = Date.from(LocalDateTime.now().plusDays(this.daysExpired).atZone(ZoneId.systemDefault()).toInstant());
         return Jwts.builder()
                 .subject(login)
                 .claim("roles", roles)

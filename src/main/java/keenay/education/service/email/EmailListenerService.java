@@ -5,7 +5,7 @@ import keenay.education.dto.email.EmailDTO;
 import keenay.education.entity.EmailsUser;
 import keenay.education.exception.ExceptionDetection;
 import keenay.education.exception.errors.NoMailFoundException;
-import keenay.education.repository.EmailsUserRepository;
+import keenay.education.repository.jpa.EmailsUserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;

@@ -3,13 +3,12 @@ package keenay.education.service.impl;
 import keenay.education.dto.advertisement_response.AdvertisementResponseBodyDTO;
 import keenay.education.dto.advertisement_response.AdvertisementResponseBodyStatusDTO;
 import keenay.education.dto.advertisement_response.AdvertisementResponseDTO;
-import keenay.education.entity.Advertisement;
 import keenay.education.entity.AdvertisementResponse;
 import keenay.education.exception.errors.AdvertisementNotFoundException;
 import keenay.education.exception.errors.AdvertisementResponseNotFoundException;
 import keenay.education.mapper.advertisement_response.AdvertisementResponseMapping;
-import keenay.education.repository.AdvertisementRepository;
-import keenay.education.repository.AdvertisementResponseRepository;
+import keenay.education.repository.jpa.AdvertisementRepository;
+import keenay.education.repository.jpa.AdvertisementResponseRepository;
 import keenay.education.security.CustomUserDetail;
 import keenay.education.service.AdvertisementResponseService;
 import lombok.RequiredArgsConstructor;
@@ -26,12 +25,12 @@ public class AdvertisementResponseServiceImpl implements AdvertisementResponseSe
     private final AdvertisementRepository advertisementRepository;
     private final AdvertisementResponseMapping advertisementResponseMapping;
 
-    private AdvertisementResponse create(CustomUserDetail customUserDetail, Advertisement advertisement,
+    private AdvertisementResponse create(CustomUserDetail customUserDetail, Long advertisementId,
                                          AdvertisementResponseBodyDTO advertisementResponseBodyDTO) {
         AdvertisementResponse advertisementResponse = AdvertisementResponse.builder()
-                .seller(customUserDetail.getUser().getSeller())
+                .sellerId(customUserDetail.getSellerId())
                 .price(advertisementResponseBodyDTO.getPrice())
-                .advertisement(advertisement)
+                .advertisementId(advertisementId)
                 .comment(advertisementResponseBodyDTO.getComment())
                 .build();
         return advertisementResponseRepository.save(advertisementResponse);
@@ -39,24 +38,23 @@ public class AdvertisementResponseServiceImpl implements AdvertisementResponseSe
 
     @Override
     public AdvertisementResponseDTO createAdvertisementResponse(CustomUserDetail customUserDetail, AdvertisementResponseBodyDTO advertisementResponseBodyDTO) {
-        Advertisement advertisement = advertisementRepository.findById(
-                advertisementResponseBodyDTO.getAdvertisementId()
-        ).orElseThrow(() -> new AdvertisementNotFoundException("Advertisement is not found."));
         return advertisementResponseMapping.getDTO(
-                create(customUserDetail, advertisement, advertisementResponseBodyDTO));
+                create(customUserDetail,
+                        advertisementResponseBodyDTO.getAdvertisementId(),
+                        advertisementResponseBodyDTO));
     }
 
     @Override
     public AdvertisementResponseDTO getAdvertisementResponse(CustomUserDetail customUserDetail, Long id) {
         AdvertisementResponse advertisementResponse = advertisementResponseRepository.findByIdAndSeller_Id(
-                id, customUserDetail.getUser().getSeller().getId()
+                id, customUserDetail.getSellerId()
         ).orElseThrow(() -> new AdvertisementResponseNotFoundException("Advertisement response is not found."));
         return advertisementResponseMapping.getDTO(advertisementResponse);
     }
 
     @Override
     public List<AdvertisementResponseDTO> getAdvertisementResponses(CustomUserDetail customUserDetail) {
-        return advertisementResponseRepository.findAllBySeller_Id(customUserDetail.getUser().getSeller().getId())
+        return advertisementResponseRepository.findAllBySeller_Id(customUserDetail.getSellerId())
                 .stream()
                 .map(advertisementResponseMapping::getDTO)
                 .toList();
@@ -64,7 +62,7 @@ public class AdvertisementResponseServiceImpl implements AdvertisementResponseSe
 
     @Override
     public List<AdvertisementResponseDTO> getResponses(CustomUserDetail customUserDetail, Long id) {
-        return advertisementRepository.findByIdAndCustomer_Id(id, customUserDetail.getUser().getCustomer().getId())
+        return advertisementRepository.findByIdAndCustomer_Id(id, customUserDetail.getCustomerId())
                 .orElseThrow(() -> new AdvertisementNotFoundException("Advertisement is not found."))
                 .getResponses()
                 .stream()
@@ -75,7 +73,7 @@ public class AdvertisementResponseServiceImpl implements AdvertisementResponseSe
     @Override
     public AdvertisementResponseDTO updateStatus(CustomUserDetail customUserDetail, Long id, AdvertisementResponseBodyStatusDTO advertisementResponseBodyStatusDTO) {
         List<AdvertisementResponse> advertisementResponseList = advertisementResponseRepository.updateStatus(
-                id, customUserDetail.getUser().getSeller().getId(), advertisementResponseBodyStatusDTO.getStatus().name()
+                id, customUserDetail.getSellerId(), advertisementResponseBodyStatusDTO.getStatus().name()
         );
         if (advertisementResponseList.isEmpty()) {
             throw new AdvertisementResponseNotFoundException("Advertisement response is not found.");
@@ -85,6 +83,6 @@ public class AdvertisementResponseServiceImpl implements AdvertisementResponseSe
 
     @Override
     public void deleteAdvertisementResponse(CustomUserDetail customUserDetail, Long id) {
-        advertisementResponseRepository.delete(id, customUserDetail.getUser().getSeller().getId());
+        advertisementResponseRepository.delete(id, customUserDetail.getSellerId());
     }
 }

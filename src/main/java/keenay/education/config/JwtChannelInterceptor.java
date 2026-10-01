@@ -60,9 +60,8 @@ public class JwtChannelInterceptor implements ChannelInterceptor {
         Authentication auth;
         try {
             String token = jwtService.getJwtToken(authHeader);
-            String login = jwtService.getLoginFromToken(token);
 
-            UserDetails userDetails = customUserService.getUserByEmail(login);
+            UserDetails userDetails = customUserService.getUserByEmail(token);
             auth = new UsernamePasswordAuthenticationToken(
                     userDetails, null, userDetails.getAuthorities());
         } catch (IllegalArgumentException | JwtException ex) {

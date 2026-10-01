@@ -1,4 +1,4 @@
-package keenay.education.repository;
+package keenay.education.repository.jpa;
 
 import keenay.education.entity.Messages;
 import org.springframework.data.domain.Page;

@@ -10,9 +10,9 @@ import keenay.education.exception.errors.AdvertisementResponseNotFoundException;
 import keenay.education.exception.errors.ChatAlreadyCreated;
 import keenay.education.exception.errors.ChatNotFoundException;
 import keenay.education.mapper.chat.ChatMapper;
-import keenay.education.repository.AdvertisementResponseRepository;
-import keenay.education.repository.ChatRepository;
-import keenay.education.repository.MessagesRepository;
+import keenay.education.repository.jpa.AdvertisementResponseRepository;
+import keenay.education.repository.jpa.ChatRepository;
+import keenay.education.repository.jpa.MessagesRepository;
 import keenay.education.security.CustomUserDetail;
 import keenay.education.service.impl.ChatServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,12 +23,9 @@ import org.mockito.Answers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 

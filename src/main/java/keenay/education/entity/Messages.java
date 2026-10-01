@@ -23,16 +23,25 @@ public class Messages {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(referencedColumnName = "id", name = "chat_id")
+    @JoinColumn(referencedColumnName = "id", name = "chat_id", insertable = false, updatable = false)
     private Chat chat;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(referencedColumnName = "id", name = "sender_id")
-    private Users sender;
+    @Column(name = "chat_id")
+    private Long chatId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(referencedColumnName = "id", name = "sender_role_id")
+    @JoinColumn(referencedColumnName = "id", name = "sender_id", insertable = false, updatable = false)
+    private Users sender;
+
+    @Column(name = "sender_id")
+    private Long senderId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(referencedColumnName = "id", name = "sender_role_id", insertable = false, updatable = false)
     private Roles role;
+
+    @Column(name = "sender_role_id")
+    private Long roleId;
 
     @Column(name = "photo", nullable = true)
     private String photo;

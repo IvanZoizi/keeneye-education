@@ -1,0 +1,4321 @@
+commands = {}
+modules = {}
+repository = {
+    ["acme-client"] = {
+        ["1.0.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["2.0.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    argon2 = {
+        ["3.0.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    argparse = {
+        ["0.5.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.6.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    authman = {
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    ["avro-schema"] = {
+        ["2.0.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["2.1.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["2.1.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["2.2.0-2"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["2.2.1-2"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["2.2.2-2"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["2.2.3-2"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["2.3.0-2"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["2.3.1-2"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["2.3.2-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["3.0.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["3.0.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["3.0.2-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["3.0.3-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["3.0.4-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["3.0.5-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["3.0.6-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["3.1.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    cartridge = {
+        ["1.0.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.1.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.2.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.0.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.0.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.0.2-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.1.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.1.2-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.10.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.11.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.12.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.12.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.12.2-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.12.3-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.12.4-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.13.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.14.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.15.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.15.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.15.2-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.15.3-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.15.4-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.16.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.16.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.16.2-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.16.3-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.16.4-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.16.5-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.16.6-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.16.7-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.17.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.17.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.17.2-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.17.3-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.18.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.18.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.2.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.2.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.3.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.4.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.5.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.5.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.6.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.7.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.7.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.7.2-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.7.3-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.7.4-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.7.5-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.7.6-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.7.7-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.7.8-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.7.9-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.8.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.8.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.8.2-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.8.3-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.8.4-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.8.5-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.8.6-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.9.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    ["cartridge-cli"] = {
+        ["1.0.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.1.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.2.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.2.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.3.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.3.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.3.2-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.4.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.4.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.4.2-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.5.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.6.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.7.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.8.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.8.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.8.2-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.8.3-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    ["cartridge-cli-extensions"] = {
+        ["1.0.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.1.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.1.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.1.2-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    ["cartridge-extensions"] = {
+        ["1.1.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    ["cartridge-metrics-role"] = {
+        ["0.1.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.1.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.1.3-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    cbench = {
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    checks = {
+        ["1.0.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.1.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["2.0.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["2.0.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["2.0.2-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["2.1.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["2.1.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["3.0.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["3.0.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["3.1.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["3.2.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["3.3.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["3.4.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["3.4.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    config = {
+        ["0.1.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    connpool = {
+        ["1.1.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    ["cron-parser"] = {
+        ["1.0.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    crud = {
+        ["0.1.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.10.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.11.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.11.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.11.2-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.11.3-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.12.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.12.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.13.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.14.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.14.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.2.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.3.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.4.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.5.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.6.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.7.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.7.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.8.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.9.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.0.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.1.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.1.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.2.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.3.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.4.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.4.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.4.2-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.4.3-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.5.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.5.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.5.2-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.6.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.6.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.7.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.7.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.7.2-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.7.3-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.7.4-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.7.5-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.7.6-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    cv = {
+        ["0.1.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.0.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.0.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    date = {
+        ["2.1.2-2"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    ddl = {
+        ["0.0.2-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.0.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.1.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.2.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.3.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.4.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.5.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.6.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.6.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.6.2-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.6.3-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.6.4-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.6.5-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.7.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.7.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    document = {
+        ["1.0.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.0.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    dump = {
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    errors = {
+        ["2.1.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["2.1.2-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["2.1.3-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.1.4-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.1.5-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.2.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.2.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    expirationd = {
+        ["1.0.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.1.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.1.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.2.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.3.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.3.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.4.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.5.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.6.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.7.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    ["frontend-core"] = {
+        ["5.0.2-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["6.0.1-1"] = {
+            {
+                arch = "all"
+            },
+            {
+                arch = "rockspec"
+            }
+        },
+        ["6.0.2-1"] = {
+            {
+                arch = "all"
+            },
+            {
+                arch = "rockspec"
+            }
+        },
+        ["6.1.1-1"] = {
+            {
+                arch = "all"
+            },
+            {
+                arch = "rockspec"
+            }
+        },
+        ["6.2.0-1"] = {
+            {
+                arch = "all"
+            },
+            {
+                arch = "rockspec"
+            }
+        },
+        ["6.3.0-1"] = {
+            {
+                arch = "all"
+            },
+            {
+                arch = "rockspec"
+            }
+        },
+        ["6.4.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["6.5.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["6.5.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["7.0.0-1"] = {
+            {
+                arch = "all"
+            },
+            {
+                arch = "rockspec"
+            }
+        },
+        ["7.1.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["7.10.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["7.11.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["7.12.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["7.12.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["7.2.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["7.3.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["7.4.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["7.5.0-1"] = {
+            {
+                arch = "all"
+            },
+            {
+                arch = "rockspec"
+            }
+        },
+        ["7.6.0-1"] = {
+            {
+                arch = "all"
+            },
+            {
+                arch = "rockspec"
+            }
+        },
+        ["7.7.0-1"] = {
+            {
+                arch = "all"
+            },
+            {
+                arch = "rockspec"
+            }
+        },
+        ["7.8.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["7.9.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["7.9.1-1"] = {
+            {
+                arch = "all"
+            },
+            {
+                arch = "rockspec"
+            }
+        },
+        ["8.0.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["8.0.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["8.0.2-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["8.0.3-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["8.0.4-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["8.0.5-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["8.1.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["8.1.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["8.1.2-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["8.2.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["8.2.2-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    gis = {
+        ["1.0.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.0.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    gperftools = {
+        ["1.0.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    graphite = {
+        ["0.0.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    graphql = {
+        ["0.1.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["0.1.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["0.1.2-1"] = {
+            {
+                arch = "src"
+            },
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.1.3-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["0.1.4-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.2.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.3.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.3.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    graphqlapi = {
+        ["0.0.10-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.0.11-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.0.13-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.0.14-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.0.15-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.0.3-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.0.4-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.0.5-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.0.6-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.0.7-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.0.8-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.0.9-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    graphqlide = {
+        ["0.0.15-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.0.16-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.0.17-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.0.18-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.0.19-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.0.20-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.0.21-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    ["healthcheck-role"] = {
+        ["0.1.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.1.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    http = {
+        ["1.0.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.0.2-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.0.3-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.0.4-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.0.5-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.0.6-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.1.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.1.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["1.2.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["1.3.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["1.4.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["1.5.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["1.6.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["1.7.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["1.8.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["1.9.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["1.9.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    ["http-v2-legacy"] = {
+        ["2.0.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["2.0.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["2.1.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["2.1.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    ["icu-date"] = {
+        ["1.1.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.1.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.2.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.2.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.3.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.3.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.3.2-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.3.3-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.4.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.4.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.4.2-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    jsonpath = {
+        ["1.0.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    kafka = {
+        ["0.5.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.0.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.0.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.0.2-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.1.0-0"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.2.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.3.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.3.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.4.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.4.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.4.2-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.5.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.5.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.5.2-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.6.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.6.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.6.10-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["1.6.11-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["1.6.12-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["1.6.13-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["1.6.14-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["1.6.15-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["1.6.2-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.6.3-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["1.6.4-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["1.6.5-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["1.6.6-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["1.6.7-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["1.6.8-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["1.6.9-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    ldecnumber = {
+        ["1.0.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.1.2-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.1.3-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    lpeglabel = {
+        ["1.5.0-1"] = {
+            {
+                arch = "src"
+            }
+        },
+        ["1.6.0-1"] = {
+            {
+                arch = "src"
+            },
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    ["lrexlib-pcre"] = {
+        ["2.9.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    ["lrexlib-pcre2"] = {
+        ["2.9.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    ["lua-term"] = {
+        ["0.7-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    luacheck = {
+        ["0.24.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.25.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.26.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    luacov = {
+        ["0.13.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    ["luacov-console"] = {
+        ["1.1.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    ["luacov-reporters"] = {
+        ["0.1.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    luafilesystem = {
+        ["1.7.0-2"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    luagraphqlparser = {
+        ["0.1.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.2.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["0.2.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    luarapidxml = {
+        ["1.1.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["2.0.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["2.0.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["2.0.2-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        }
+    },
+    luatest = {
+        ["0.1.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.2.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.2.2-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.3.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.4.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.5.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.5.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.5.2-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.5.3-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.5.4-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.5.5-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.5.6-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.5.7-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.0.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.0.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.1.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.2.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.2.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.3.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.3.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.4.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.4.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.4.2-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.4.3-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.4.4-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.4.5-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    lulpeg = {
+        ["0.1.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.1.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.1.2-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["scm-3"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    membership = {
+        ["2.1.3-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["2.1.4-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["2.2.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["2.3.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.3.2-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.4.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.4.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.4.2-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.4.3-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.4.4-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.4.5-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.4.6-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.5.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.5.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.5.2-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.5.3-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["2.5.4-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    memcached = {
+        ["1.0.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.0.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.1.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["1.1.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["1.1.2-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    metrics = {
+        ["0.1.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.1.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.1.2-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.1.3-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.1.4-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.1.5-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.1.6-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.1.7-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.1.8-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.10.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.11.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.12.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.13.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.14.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.15.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.15.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.16.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.17.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.2.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.3.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.4.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.5.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.6.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.6.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.7.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.7.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.8.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.9.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.0.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.1.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.2.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.3.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.3.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.4.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.5.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.6.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.6.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.6.2-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.7.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.8.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.8.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.8.2-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.8.3-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    ["metrics-export-role"] = {
+        ["0.1.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.2.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.3.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.3.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.3.2-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.4.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.4.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.4.2-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    migrate = {
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    migrations = {
+        ["0.2.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.3.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.3.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.4.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.4.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.4.2-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.5.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.6.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.7.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.0.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.0.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.0.2-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.1.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.2.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.2.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    moonwalker = {
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    mqtt = {
+        ["1.2.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.4.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.5.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.5.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    mrasender = {
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    mysql = {
+        ["2.0.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["2.1.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["2.1.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["2.1.2-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["2.1.3-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    pg = {
+        ["2.0.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["2.0.2-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    prometheus = {
+        ["1.0.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.0.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.0.2-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.0.3-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.0.4-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    queue = {
+        ["1.0.2-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.0.3-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.0.4-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.0.5-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.0.6-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.0.7-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.0.8-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.1.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.2.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.2.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.2.2-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.2.5-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.3.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.3.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.3.2-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.3.3-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.4.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.4.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.4.2-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.4.3-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.4.4-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.5.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    shard = {
+        ["1.2-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["2.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["2.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    ["sharded-queue"] = {
+        ["0.1.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.1.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.0.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["1.1.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    smtp = {
+        ["0.0.2-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.0.3-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.0.4-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.0.5-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.0.6-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["0.0.7-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    sqlparser = {
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    stat = {
+        ["0.3.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.3.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.3.2-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    ["tarantool-lsp"] = {
+        ["0.0.1-1"] = {
+            {
+                arch = "all"
+            }
+        },
+        ["0.0.2-1"] = {
+            {
+                arch = "all"
+            }
+        }
+    },
+    template = {
+        ["2.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    ["tnt-kafka"] = {
+        ["0.4.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    tracing = {
+        ["0.1.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    ["tuple-keydef"] = {
+        ["0.0.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.0.2-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["0.0.3-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["0.0.4-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    ["tuple-merger"] = {
+        ["0.0.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.0.2-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["0.0.3-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["0.0.4-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["0.0.5-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    vshard = {
+        ["0.1.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.1.10-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.1.11-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.1.12-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.1.13-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.1.14-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.1.15-1"] = {
+            {
+                arch = "src"
+            }
+        },
+        ["0.1.16-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["0.1.17-1"] = {
+            {
+                arch = "all"
+            },
+            {
+                arch = "src"
+            },
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.1.18-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.1.19-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["0.1.2-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.1.20-1"] = {
+            {
+                arch = "src"
+            }
+        },
+        ["0.1.21-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.1.22-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.1.23-1"] = {
+            {
+                arch = "all"
+            }
+        },
+        ["0.1.24-1"] = {
+            {
+                arch = "all"
+            }
+        },
+        ["0.1.25-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.1.26-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.1.27-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.1.28-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.1.29-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.1.3-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.1.30-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.1.31-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.1.32-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.1.33-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.1.34-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.1.35-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.1.36-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.1.37-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.1.38-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.1.39-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.1.4-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.1.40-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.1.41-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.1.42-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "all"
+            }
+        },
+        ["0.1.5-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.1.6-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.1.7-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.1.8-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.1.9-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    watchdog = {
+        ["1.0.0-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.0.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.0.2-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["1.1.0-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["1.1.1-1"] = {
+            {
+                arch = "rockspec"
+            },
+            {
+                arch = "src"
+            }
+        },
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["scm-2"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    websocket = {
+        ["0.0.1-1"] = {
+            {
+                arch = "rockspec"
+            }
+        },
+        ["0.0.2-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    },
+    zookeeper = {
+        ["scm-1"] = {
+            {
+                arch = "rockspec"
+            }
+        }
+    }
+}

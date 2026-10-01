@@ -23,8 +23,11 @@ public class PetsProfile {
     private Long id;
 
     @OneToOne
-    @JoinColumn(referencedColumnName = "id", name = "pet_id")
+    @JoinColumn(referencedColumnName = "id", name = "pet_id", insertable = false, updatable = false)
     private Pets pet;
+
+    @Column(name = "pet_id")
+    private Long petId;
 
     @Column(name = "breed", nullable = false)
     private String breed;

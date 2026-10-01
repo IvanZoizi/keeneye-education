@@ -3,14 +3,13 @@ package keenay.education.service.impl;
 import keenay.education.dto.chat.ChatDTO;
 import keenay.education.dto.chat.MessageDTO;
 import keenay.education.entity.*;
-import keenay.education.exception.errors.AccessDeniedException;
 import keenay.education.exception.errors.AdvertisementResponseNotFoundException;
 import keenay.education.exception.errors.ChatAlreadyCreated;
 import keenay.education.exception.errors.ChatNotFoundException;
 import keenay.education.mapper.chat.ChatMapper;
-import keenay.education.repository.AdvertisementResponseRepository;
-import keenay.education.repository.ChatRepository;
-import keenay.education.repository.MessagesRepository;
+import keenay.education.repository.jpa.AdvertisementResponseRepository;
+import keenay.education.repository.jpa.ChatRepository;
+import keenay.education.repository.jpa.MessagesRepository;
 import keenay.education.security.CustomUserDetail;
 import keenay.education.service.ChatService;
 import lombok.RequiredArgsConstructor;
@@ -35,10 +34,10 @@ public class ChatServiceImpl implements ChatService {
     private final ChatMapper chatMapper;
     private final MessagesRepository messagesRepository;
 
-    private Chat create(Users customer, Users seller) {
+    private Chat create(Long customerId, Long sellerId) {
         Chat chat = Chat.builder()
-                .customer(customer)
-                .seller(seller)
+                .customerId(customerId)
+                .sellerId(sellerId)
                 .build();
         return chatRepository.save(chat);
     }
@@ -49,21 +48,21 @@ public class ChatServiceImpl implements ChatService {
         AdvertisementResponse advertisementResponse = advertisementResponseRepository
                 .findByIdAndAdvertisement_Id(advertisementResponseId, advertisementId)
                 .orElseThrow(() -> new AdvertisementResponseNotFoundException("Advertisement Response is not found."));
-        Optional<Chat> chat = chatRepository.findByCustomer_IdAndSeller_Id(customUserDetail.getUser().getId(),
+        Optional<Chat> chat = chatRepository.findByCustomer_IdAndSeller_Id(customUserDetail.getUserId(),
                 advertisementResponse.getSeller().getUser().getId());
         if (chat.isPresent()) {
             throw new ChatAlreadyCreated("Chat is already created");
         }
         return chatMapper.getDTO(create(
-                customUserDetail.getUser(),
-                advertisementResponse.getSeller().getUser()
+                customUserDetail.getUserId(),
+                advertisementResponse.getSeller().getUser().getId()
         ));
     }
 
     @Override
     public ChatDTO getChat(CustomUserDetail customUserDetail, Long chatId) {
 
-        Chat chat = chatRepository.findMessages(chatId, customUserDetail.getUser().getId())
+        Chat chat = chatRepository.findMessages(chatId, customUserDetail.getUserId())
                 .orElseThrow(() -> new ChatNotFoundException("Chat is not found"));
 
         return chatMapper.getDTO(
@@ -73,8 +72,8 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public List<ChatDTO> getChats(CustomUserDetail customUserDetail) {
-        return chatRepository.findAllByCustomer_IdOrSeller_Id(customUserDetail.getUser().getId(),
-                        customUserDetail.getUser().getId())
+        return chatRepository.findAllByCustomer_IdOrSeller_Id(customUserDetail.getUserId(),
+                        customUserDetail.getUserId())
                 .stream()
                 .map(chatMapper::getDTO)
                 .toList();
@@ -83,10 +82,10 @@ public class ChatServiceImpl implements ChatService {
     @Override
     @Transactional
     public Page<MessageDTO> getMessages(CustomUserDetail customUserDetail, Long chatId, Pageable pageable) {
-        Chat chat = chatRepository.findMessages(chatId, customUserDetail.getUser().getId())
+        Chat chat = chatRepository.findMessages(chatId, customUserDetail.getUserId())
                 .orElseThrow(() -> new ChatNotFoundException("Chat is not found"));
 
-        messagesRepository.markAsRead(chatId, customUserDetail.getUser().getId(), LocalDateTime.now());
+        messagesRepository.markAsRead(chatId, customUserDetail.getUserId(), LocalDateTime.now());
 
         return messagesRepository.getMessagesByChat_IdOrderByCreatedAtDesc(chatId, pageable)
                 .map(chatMapper::getDTO);

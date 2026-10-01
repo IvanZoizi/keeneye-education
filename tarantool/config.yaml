@@ -1,0 +1,37 @@
+credentials:
+  users:
+    app:
+      password: 'admin'
+      roles: [super, sharding]
+
+iproto:
+  advertise:
+    peer:
+      login: app
+    sharding:
+      login: app
+
+sharding:
+  bucket_count: 3000
+
+replication:
+  failover: manual
+
+groups:
+  app-group:
+    app:
+      module: storage
+    sharding:
+      roles: [storage, router]
+    roles: [roles.crud-storage, roles.crud-router]
+    replicasets:
+      app-rs:
+        leader: instance-001
+        instances:
+          instance-001:
+            iproto:
+              listen:
+                - uri: '0.0.0.0:3301'
+              advertise:
+                sharding:
+                  uri: '127.0.0.1:3301'

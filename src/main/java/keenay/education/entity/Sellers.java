@@ -26,8 +26,11 @@ public class Sellers {
     private Long id;
 
     @OneToOne
-    @JoinColumn(referencedColumnName = "id", name = "user_id")
+    @JoinColumn(referencedColumnName = "id", name = "user_id", insertable = false, updatable = false)
     private Users user;
+
+    @Column(name = "user_id")
+    private Long userId;
 
     @Column(name = "name", nullable = false)
     private String name;

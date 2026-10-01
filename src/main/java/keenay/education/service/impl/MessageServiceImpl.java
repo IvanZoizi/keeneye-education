@@ -8,10 +8,10 @@ import keenay.education.exception.errors.AccessDeniedException;
 import keenay.education.exception.errors.ChatNotFoundException;
 import keenay.education.exception.errors.UserIsNotFoundException;
 import keenay.education.mapper.chat.ChatMapper;
-import keenay.education.repository.ChatRepository;
-import keenay.education.repository.MessagesRepository;
-import keenay.education.repository.RolesRepository;
-import keenay.education.repository.UserRepository;
+import keenay.education.repository.jpa.ChatRepository;
+import keenay.education.repository.jpa.MessagesRepository;
+import keenay.education.repository.jpa.RolesRepository;
+import keenay.education.repository.jpa.UserRepository;
 import keenay.education.service.MessageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,16 +31,16 @@ public class MessageServiceImpl implements MessageService {
     private final RolesRepository rolesRepository;
     private final ChatMapper chatMapper;
 
-    private Messages create(Chat chat, ChatMessageBodyDTO chatMessageBodyDTO, Users user) {
+    private Messages create(Chat chat, ChatMessageBodyDTO chatMessageBodyDTO, Long userId) {
         Messages message = Messages.builder()
-                .chat(chat)
+                .chatId(chat.getId())
                 .text(chatMessageBodyDTO.getText())
-                .sender(user)
+                .senderId(userId)
                 .build();
-        if (chat.getCustomer().getId().equals(user.getId())) {
+        if (chat.getCustomer().getId().equals(userId)) {
             message.setRole(rolesRepository.findByRole("customer")
                     .orElseThrow());
-        } else if (chat.getSeller().getId().equals(user.getId())) {
+        } else if (chat.getSeller().getId().equals(userId)) {
             message.setRole(rolesRepository.findByRole("seller")
                     .orElseThrow());
         }  else {
@@ -55,7 +55,7 @@ public class MessageServiceImpl implements MessageService {
                 .orElseThrow(() -> new ChatNotFoundException("Chat is not found."));
         Users user = userRepository.findByEmail(principal.getName()).
                 orElseThrow(() -> new UserIsNotFoundException("User is not found"));
-        Messages message = create(chat, chatMessageBodyDTO, user);
+        Messages message = create(chat, chatMessageBodyDTO, user.getId());
         messagingTemplate.convertAndSend(
                 "/queue/chats/" + chatId,
                 chatMapper.getDTO(message)

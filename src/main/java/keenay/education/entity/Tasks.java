@@ -24,12 +24,19 @@ public class Tasks {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(referencedColumnName = "id", name = "advertisement_id", nullable = true)
+    @JoinColumn(referencedColumnName = "id", name = "advertisement_id", nullable = true,
+            insertable = false, updatable = false)
     private Advertisement advertisement;
 
+    @Column(name = "advertisement_id")
+    private Long advertisementId;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(referencedColumnName = "id", name = "client_id")
+    @JoinColumn(referencedColumnName = "id", name = "client_id", insertable = false, updatable = false)
     private Customers customer;
+
+    @Column(name = "client_id")
+    private Long customerId;
 
     @Column(name = "photo", nullable = true)
     private String photoUrl;

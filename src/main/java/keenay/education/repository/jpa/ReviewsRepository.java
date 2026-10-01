@@ -1,4 +1,4 @@
-package keenay.education.repository;
+package keenay.education.repository.jpa;
 
 import keenay.education.entity.Reviews;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -26,19 +26,28 @@ public class Advertisement {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(referencedColumnName = "id", name = "pet_id")
+    @JoinColumn(referencedColumnName = "id", name = "pet_id", insertable = false, updatable = false)
     private Pets pet;
 
+    @Column( name = "pet_id")
+    private Long petId;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(referencedColumnName = "id", name = "client_id")
+    @JoinColumn(referencedColumnName = "id", name = "client_id", insertable = false, updatable = false)
     private Customers customer;
+
+    @Column(name = "client_id")
+    private Long customerId;
 
     @OneToMany(mappedBy = "advertisement", fetch = FetchType.LAZY)
     private List<AdvertisementResponse> responses = new ArrayList<>();
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "selected_response_id", referencedColumnName = "id")
+    @JoinColumn(name = "selected_response_id", referencedColumnName = "id", insertable = false, updatable = false)
     private AdvertisementResponse selectedResponse;
+
+    @Column(name = "selected_response_id")
+    private Long selectedResponseId;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)

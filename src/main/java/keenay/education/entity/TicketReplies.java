@@ -23,8 +23,11 @@ public class TicketReplies {
     private Long id;
 
     @OneToOne
-    @JoinColumn(referencedColumnName = "id", name = "ticket_id")
+    @JoinColumn(referencedColumnName = "id", name = "ticket_id", insertable = false, updatable = false)
     private Ticket ticket;
+
+    @Column(name = "ticket_id")
+    private Long ticketId;
 
     @Column(name = "answer", nullable = false)
     private String answer;

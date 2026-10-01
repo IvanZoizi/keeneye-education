@@ -3,21 +3,18 @@ package keenay.education.service.impl;
 import keenay.education.dto.tasks.TaskBodyDTO;
 import keenay.education.dto.tasks.TaskBodyStatusDTO;
 import keenay.education.dto.tasks.TaskDTO;
-import keenay.education.entity.Advertisement;
 import keenay.education.entity.Tasks;
 import keenay.education.entity.status.TasksStatus;
-import keenay.education.exception.errors.AdvertisementNotFoundException;
 import keenay.education.exception.errors.TaskBusyException;
 import keenay.education.exception.errors.TaskNotFoundException;
 import keenay.education.mapper.tasks.TaskMapper;
-import keenay.education.repository.AdvertisementRepository;
-import keenay.education.repository.TasksRepository;
+import keenay.education.repository.jpa.AdvertisementRepository;
+import keenay.education.repository.jpa.TasksRepository;
 import keenay.education.security.CustomUserDetail;
 import keenay.education.service.TaskService;
 import keenay.education.service.image.ImageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,7 +33,7 @@ public class TaskServiceImpl implements TaskService {
 
     private Tasks createTaskWithPhoto(CustomUserDetail userDetail, TaskBodyDTO taskBodyDTO, MultipartFile photo) {
         Tasks task = Tasks.builder()
-                .customer(userDetail.getUser().getCustomer())
+                .customerId(userDetail.getCustomerId())
                 .title(taskBodyDTO.getTitle())
                 .description(taskBodyDTO.getDescription())
                 .photoUrl(!photo.isEmpty()?imageService.uploadPhoto(photo, userDetail):null)
@@ -52,13 +49,13 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public TaskDTO getTask(CustomUserDetail customUserDetail, Long id) {
-        return taskMapper.getDTO(tasksRepository.findByIdAndCustomer_Id(id, customUserDetail.getUser().getCustomer().getId())
+        return taskMapper.getDTO(tasksRepository.findByIdAndCustomer_Id(id, customUserDetail.getCustomerId())
                 .orElseThrow(() -> new TaskNotFoundException("This task is not found.")));
     }
 
     @Override
     public List<TaskDTO> getAvailTasks(CustomUserDetail customUserDetail) {
-        return tasksRepository.findAllByCustomer_Id(customUserDetail.getUser().getCustomer().getId())
+        return tasksRepository.findAllByCustomer_Id(customUserDetail.getCustomerId())
                 .stream()
                 .map(taskMapper::getDTO)
                 .toList();
@@ -66,7 +63,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<TaskDTO> getCreatedTasks(CustomUserDetail customUserDetail) {
-        return tasksRepository.findAllByCustomer_IdAndStatus(customUserDetail.getUser().getCustomer().getId(),
+        return tasksRepository.findAllByCustomer_IdAndStatus(customUserDetail.getCustomerId(),
                 TasksStatus.CREATED).stream()
                 .map(taskMapper::getDTO)
                 .toList();
@@ -74,7 +71,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public TaskDTO updateTask(CustomUserDetail customUserDetail, Long id, TaskBodyDTO taskBodyDTO) {
-        List<Tasks> tasks = tasksRepository.updateTask(id, customUserDetail.getUser().getCustomer().getId(),
+        List<Tasks> tasks = tasksRepository.updateTask(id, customUserDetail.getCustomerId(),
                 taskBodyDTO.getTitle(), taskBodyDTO.getDescription());
         if (tasks.isEmpty()) {
             throw new TaskNotFoundException("This task is not found.");
@@ -85,12 +82,10 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional
     public TaskDTO updatePhotoTask(CustomUserDetail customUserDetail, Long id, MultipartFile photo) {
-        Tasks pasted = tasksRepository.findByIdAndCustomer_Id(id, customUserDetail.getUser().getCustomer().getId())
+        Tasks pasted = tasksRepository.findByIdAndCustomer_Id(id, customUserDetail.getCustomerId())
                 .orElseThrow(() -> new TaskNotFoundException("This task is not found."));
-
         String photoUrl = imageService.uploadPhoto(photo, customUserDetail);
-        Tasks updated = tasksRepository.updateTaskPhoto(id, customUserDetail.getUser().getCustomer().getId(),
-                photoUrl).get(0);
+        Tasks updated = tasksRepository.updateTaskPhoto(id, customUserDetail.getCustomerId(), photoUrl).get(0);
         if (!pasted.getPhotoUrl().isEmpty()) {
             imageService.deletePhoto(pasted.getPhotoUrl());
         }
@@ -99,7 +94,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public TaskDTO updateTaskStatus(CustomUserDetail customUserDetail, Long id, TaskBodyStatusDTO taskBodyStatusDTO) {
-        List<Tasks> tasks = tasksRepository.updateTaskStatus(id, customUserDetail.getUser().getCustomer().getId(),
+        List<Tasks> tasks = tasksRepository.updateTaskStatus(id, customUserDetail.getCustomerId(),
                 taskBodyStatusDTO.getStatus().name());
         if (tasks.isEmpty()) {
             throw new TaskNotFoundException("This task is not found.");
@@ -109,14 +104,12 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public TaskDTO setAdvertisement(CustomUserDetail customUserDetail, Long id, Long advertisementId) {
-        Advertisement advertisement = advertisementRepository.findById(advertisementId)
-                .orElseThrow(() -> new AdvertisementNotFoundException("This advertisement not found."));
-        Tasks task = tasksRepository.findByIdAndCustomer_Id(id, customUserDetail.getUser().getCustomer().getId())
+        Tasks task = tasksRepository.findByIdAndCustomer_Id(id, customUserDetail.getCustomerId())
                 .orElseThrow(() -> new TaskNotFoundException("This task is not found."));
         if (task.getAdvertisement() != null) {
             throw new TaskBusyException("Task is busy");
         }
-        task.setAdvertisement(advertisement);
+        task.setAdvertisementId(advertisementId);
         this.updateTaskStatus(customUserDetail, id, new TaskBodyStatusDTO(TasksStatus.PROGRESS));
         return taskMapper.getDTO(tasksRepository.save(task));
     }
@@ -124,7 +117,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public TaskDTO deleteAdvertisement(CustomUserDetail customUserDetail, Long id) {
         List<Tasks> tasks = tasksRepository.deleteAdvertisement(id,
-                customUserDetail.getUser().getCustomer().getId(), null);
+                customUserDetail.getCustomerId(), null);
         if (tasks.isEmpty()) {
             throw new TaskNotFoundException("This task is not found.");
         }
@@ -135,7 +128,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void deleteTask(CustomUserDetail customUserDetail, Long id) {
-        List<Tasks> tasks = tasksRepository.delete(id, customUserDetail.getUser().getCustomer().getId());
+        List<Tasks> tasks = tasksRepository.delete(id, customUserDetail.getCustomerId());
         for (Tasks task : tasks) {
             if (!task.getPhotoUrl().isEmpty()) {
                 imageService.deletePhoto(task.getPhotoUrl());

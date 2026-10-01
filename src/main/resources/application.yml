@@ -1,4 +1,10 @@
 spring:
+  data:
+    tarantool:
+      host: localhost
+      port: 3301
+      username: admin
+      password: admin
   servlet:
     multipart:
       enabled: true
@@ -20,6 +26,7 @@ spring:
     default-schema: public
   security:
     key: 8074658237c236e39e96e909ac1abb25a3e1773b100096ad6877c439cd452c17
+    days: 7
   rabbitmq:
     username: admin
     password: admin
@@ -60,10 +67,6 @@ rabbitmq:
     login: admin
     passcode: admin
 
-caffeine:
-  expire-minutes: 5
-  size: 10_000
-
 minio:
   endpoint: http://localhost:9000
   access-key: admin
@@ -74,5 +77,6 @@ minio:
 logging:
   level:
     keenay.education: INFO
+    io.tarantool: DEBUG
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - [%mdc] %msg%n"

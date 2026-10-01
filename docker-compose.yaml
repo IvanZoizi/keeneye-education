@@ -45,6 +45,18 @@ services:
       - minio_data:/data
     command: server /data --console-address ":9001"
 
+  tarantool:
+    build:
+      context: .
+      dockerfile: Dockerfile.tarantool
+    container_name: my-tarantool
+    working_dir: /opt/tarantool
+    ports:
+      - "3301:3301"
+    volumes:
+      - tarantool_data:/var/lib/tarantool
+    command: tarantool --name instance-001 --config /opt/tarantool/config.yaml
+
 networks:
   app-network:
     driver: bridge
@@ -53,3 +65,4 @@ volumes:
   postgres_data:
   rabbitmq_data:
   minio_data:
+  tarantool_data:

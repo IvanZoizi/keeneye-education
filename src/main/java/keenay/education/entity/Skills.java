@@ -23,12 +23,18 @@ public class Skills {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seller_id", referencedColumnName = "id")
+    @JoinColumn(name = "seller_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Sellers seller;
 
+    @Column(name = "seller_id")
+    private Long sellerId;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "animal_id", referencedColumnName = "id")
+    @JoinColumn(name = "animal_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Animals animal;
+
+    @Column(name = "animal_id")
+    private Long animalId;
 
     @Column(name = "title")
     private String title;

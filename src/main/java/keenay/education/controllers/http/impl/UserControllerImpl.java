@@ -42,4 +42,11 @@ public class UserControllerImpl implements UserController {
     public JwtAutorizeToken signIn(@Valid @RequestBody LoginDTO loginDTO) throws AuthenticationException {
         return userService.singIn(loginDTO);
     }
+
+    @Override
+    @PostMapping("/logout")
+    public String logout(String bearer) {
+        String token = bearer.substring(7);
+        return userService.logout(token);
+    }
 }
