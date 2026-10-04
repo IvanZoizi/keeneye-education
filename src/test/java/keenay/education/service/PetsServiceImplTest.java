@@ -59,8 +59,8 @@ public class PetsServiceImplTest {
 
     @BeforeEach
     public void setUp() {
-        lenient().when(userDetail.getUser().getId()).thenReturn(USER_ID);
-        lenient().when(userDetail.getUser().getCustomer().getId()).thenReturn(CUSTOMER_ID);
+        lenient().when(userDetail.getUserId()).thenReturn(USER_ID);
+        lenient().when(userDetail.getCustomerId()).thenReturn(CUSTOMER_ID);
     }
 
     private Animals animal(String name) {
@@ -122,7 +122,6 @@ public class PetsServiceImplTest {
         customer.setId(CUSTOMER_ID);
         PetsDTO expected = dto(PET_ID);
 
-        when(userDetail.getUser().getCustomer()).thenReturn(customer);
         when(animalsRepository.findByName("Dog")).thenReturn(Optional.of(animal));
         when(petsRepository.save(any(Pets.class))).thenAnswer(invocation -> {
             Pets p = invocation.getArgument(0);

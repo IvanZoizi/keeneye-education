@@ -9,7 +9,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
 @Mapper(componentModel = "spring")
-public interface AdvertisementResponseMapping {
+public interface AdvertisementResponseMapping  {
     @Mappings({
             @Mapping(source = "advertisementResponse.id", target="id"),
             @Mapping(source = "advertisementResponse.seller.id", target = "sellerId"),

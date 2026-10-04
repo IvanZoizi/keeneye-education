@@ -63,7 +63,7 @@ public class TaskServiceImplTest {
 
     @BeforeEach
     public void setUp() {
-        lenient().when(userDetail.getUser().getCustomer().getId()).thenReturn(CUSTOMER_ID);
+        lenient().when(userDetail.getCustomerId()).thenReturn(CUSTOMER_ID);
     }
 
     private Tasks task(Long id, TasksStatus status) {

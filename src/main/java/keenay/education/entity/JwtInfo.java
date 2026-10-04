@@ -24,6 +24,10 @@ public class JwtInfo {
     @JsonProperty("tokenHash")
     private String tokenHash;
 
+    @Field("bucket_id")
+    @JsonProperty("bucketId")
+    private Long bucketId;
+
     @Field("user_id")
     @JsonProperty("userId")
     private Long userId;

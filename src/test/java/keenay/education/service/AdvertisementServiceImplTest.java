@@ -69,9 +69,9 @@ public class AdvertisementServiceImplTest {
 
     @BeforeEach
     public void setUp() {
-        lenient().when(userDetail.getUser().getId()).thenReturn(USER_ID);
-        lenient().when(userDetail.getUser().getCustomer().getId()).thenReturn(CUSTOMER_ID);
-        lenient().when(userDetail.getUser().getSeller().getId()).thenReturn(SELLER_ID);
+        lenient().when(userDetail.getUserId()).thenReturn(USER_ID);
+        lenient().when(userDetail.getCustomerId()).thenReturn(CUSTOMER_ID);
+        lenient().when(userDetail.getSellerId()).thenReturn(SELLER_ID);
     }
 
     private Advertisement advertisement(Long id) {

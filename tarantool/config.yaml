@@ -18,14 +18,14 @@ replication:
   failover: manual
 
 groups:
-  app-group:
-    app:
-      module: storage
+  storages:
     sharding:
-      roles: [storage, router]
-    roles: [roles.crud-storage, roles.crud-router]
+      roles: [storage]
+    roles: [roles.crud-storage]
+    app:
+      file: /opt/tarantool/init.lua
     replicasets:
-      app-rs:
+      storage-rs-001:
         leader: instance-001
         instances:
           instance-001:
@@ -34,4 +34,20 @@ groups:
                 - uri: '0.0.0.0:3301'
               advertise:
                 sharding:
-                  uri: '127.0.0.1:3301'
+                  uri: 'my-tarantool-storage:3301'
+
+  routers:
+    sharding:
+      roles: [router]
+    roles: [roles.crud-router]
+    replicasets:
+      router-rs-001:
+        leader: router-001
+        instances:
+          router-001:
+            iproto:
+              listen:
+                - uri: '0.0.0.0:3302'
+              advertise:
+                sharding:
+                  uri: 'my-tarantool-router:3302'

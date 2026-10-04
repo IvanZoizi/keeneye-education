@@ -53,7 +53,7 @@ public class SkillsServiceImplTest {
 
     @BeforeEach
     public void setUp() {
-        lenient().when(userDetail.getUser().getSeller().getId()).thenReturn(SELLER_ID);
+        lenient().when(userDetail.getSellerId()).thenReturn(SELLER_ID);
     }
 
     private Animals animal(String name) {
@@ -102,7 +102,6 @@ public class SkillsServiceImplTest {
         seller.setId(SELLER_ID);
         SkillsDTO expected = dto(SKILL_ID);
 
-        when(userDetail.getUser().getSeller()).thenReturn(seller);
         when(animalsRepository.findByName("Dog")).thenReturn(Optional.of(animal));
         when(skillsRepository.save(any(Skills.class))).thenAnswer(invocation -> {
             Skills s = invocation.getArgument(0);

@@ -2,8 +2,8 @@ spring:
   data:
     tarantool:
       host: localhost
-      port: 3301
-      username: admin
+      port: 3302
+      username: app
       password: admin
   servlet:
     multipart:

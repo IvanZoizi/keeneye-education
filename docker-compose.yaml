@@ -45,17 +45,35 @@ services:
       - minio_data:/data
     command: server /data --console-address ":9001"
 
-  tarantool:
+  tarantool-storage:
     build:
       context: .
       dockerfile: Dockerfile.tarantool
-    container_name: my-tarantool
+    container_name: my-tarantool-storage
     working_dir: /opt/tarantool
     ports:
       - "3301:3301"
     volumes:
-      - tarantool_data:/var/lib/tarantool
+      - tarantool_storage_data:/var/lib/tarantool
     command: tarantool --name instance-001 --config /opt/tarantool/config.yaml
+    networks:
+      - app-network
+
+  tarantool-router:
+    build:
+      context: .
+      dockerfile: Dockerfile.tarantool
+    container_name: my-tarantool-router
+    working_dir: /opt/tarantool
+    ports:
+      - "3302:3302"
+    volumes:
+      - tarantool_router_data:/var/lib/tarantool
+    command: tarantool --name router-001 --config /opt/tarantool/config.yaml
+    depends_on:
+      - tarantool-storage
+    networks:
+      - app-network
 
 networks:
   app-network:
@@ -65,4 +83,5 @@ volumes:
   postgres_data:
   rabbitmq_data:
   minio_data:
-  tarantool_data:
+  tarantool_storage_data:
+  tarantool_router_data:
