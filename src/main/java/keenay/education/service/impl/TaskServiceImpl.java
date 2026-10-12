@@ -5,8 +5,7 @@ import keenay.education.dto.tasks.TaskBodyStatusDTO;
 import keenay.education.dto.tasks.TaskDTO;
 import keenay.education.entity.Tasks;
 import keenay.education.entity.status.TasksStatus;
-import keenay.education.exception.errors.TaskBusyException;
-import keenay.education.exception.errors.TaskNotFoundException;
+import keenay.education.exception.errors.*;
 import keenay.education.mapper.tasks.TaskMapper;
 import keenay.education.repository.jpa.AdvertisementRepository;
 import keenay.education.repository.jpa.TasksRepository;
@@ -32,13 +31,28 @@ public class TaskServiceImpl implements TaskService {
     private final AdvertisementRepository advertisementRepository;
 
     private Tasks createTaskWithPhoto(CustomUserDetail userDetail, TaskBodyDTO taskBodyDTO, MultipartFile photo) {
-        Tasks task = Tasks.builder()
-                .customerId(userDetail.getCustomerId())
-                .title(taskBodyDTO.getTitle())
-                .description(taskBodyDTO.getDescription())
-                .photoUrl(!photo.isEmpty()?imageService.uploadPhoto(photo, userDetail):null)
-                .build();
-        return tasksRepository.save(task);
+        String photoUrl = null;
+        try {
+            if (!photo.isEmpty()) {
+                photoUrl = imageService.uploadPhoto(photo, userDetail);
+            }
+            Tasks task = Tasks.builder()
+                    .customerId(userDetail.getCustomerId())
+                    .title(taskBodyDTO.getTitle())
+                    .description(taskBodyDTO.getDescription())
+                    .photoUrl(photoUrl)
+                    .build();
+            return tasksRepository.save(task);
+        } catch (ImageUploadException e) {
+            log.error(e.toString());
+            throw new TaskIsNotCreate("The photo was not uploaded");
+        } catch (Exception e) {
+            log.error(e.toString());
+            if (photoUrl != null && !photoUrl.isEmpty()) {
+                imageService.deletePhoto(photoUrl);
+            }
+            throw new TaskIsNotCreate("The task has not been created.");
+        }
     }
 
     @Override
@@ -80,16 +94,36 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    @Transactional
     public TaskDTO updatePhotoTask(CustomUserDetail customUserDetail, Long id, MultipartFile photo) {
         Tasks pasted = tasksRepository.findByIdAndCustomer_Id(id, customUserDetail.getCustomerId())
                 .orElseThrow(() -> new TaskNotFoundException("This task is not found."));
-        String photoUrl = imageService.uploadPhoto(photo, customUserDetail);
-        Tasks updated = tasksRepository.updateTaskPhoto(id, customUserDetail.getCustomerId(), photoUrl).get(0);
-        if (!pasted.getPhotoUrl().isEmpty()) {
-            imageService.deletePhoto(pasted.getPhotoUrl());
+        String photoUrl = pasted.getPhotoUrl();
+        String newPhotoUrl = null;
+        try {
+            newPhotoUrl = imageService.uploadPhoto(photo, customUserDetail);
+            Tasks updated = tasksRepository.updateTaskPhoto(id, customUserDetail.getCustomerId(), newPhotoUrl).get(0);
+            if (photoUrl != null && !photoUrl.isEmpty()) {
+                try {
+                    imageService.deletePhoto(photoUrl);
+                } catch (ImageDeleteException ex) {
+                    log.error(ex.toString());
+                }
+            }
+            return taskMapper.getDTO(updated);
+        } catch (ImageUploadException ex) {
+            log.error(ex.toString());
+            throw new TaskIsNotCreate("The photo was not uploaded");
+        } catch (Exception ex) {
+            log.error(ex.toString());
+            if (newPhotoUrl != null && !newPhotoUrl.isEmpty()) {
+                try {
+                    imageService.deletePhoto(newPhotoUrl);
+                } catch (ImageDeleteException exDelete) {
+                    log.error(exDelete.toString());
+                }
+            }
+            throw new TaskIsNotCreate("The task has not been created.");
         }
-        return taskMapper.getDTO(updated);
     }
 
     @Override
@@ -130,7 +164,7 @@ public class TaskServiceImpl implements TaskService {
     public void deleteTask(CustomUserDetail customUserDetail, Long id) {
         List<Tasks> tasks = tasksRepository.delete(id, customUserDetail.getCustomerId());
         for (Tasks task : tasks) {
-            if (!task.getPhotoUrl().isEmpty()) {
+            if (task.getPhotoUrl() != null && !task.getPhotoUrl().isEmpty()) {
                 imageService.deletePhoto(task.getPhotoUrl());
             }
         }

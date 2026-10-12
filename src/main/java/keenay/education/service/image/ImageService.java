@@ -7,6 +7,7 @@ import keenay.education.exception.errors.ImageUploadException;
 import keenay.education.security.CustomUserDetail;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.mapstruct.Named;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -56,18 +57,24 @@ public class ImageService {
 
     }
 
+    @Named("photoUrlToPresigned")
     public String getUrlForPhoto(String photoName) {
         try {
-            return minioClient.getPresignedObjectUrl(
-                    GetPresignedObjectUrlArgs.builder()
-                            .method(Http.Method.GET)
-                            .bucket(bucketName)
-                            .object(photoName)
-                            .expiry(days, TimeUnit.DAYS)
-                            .build()
-            );
+            if (photoName != null && !photoName.isEmpty()) {
+                return minioClient.getPresignedObjectUrl(
+                        GetPresignedObjectUrlArgs.builder()
+                                .method(Http.Method.GET)
+                                .bucket(bucketName)
+                                .object(photoName)
+                                .expiry(days, TimeUnit.DAYS)
+                                .build()
+                );
+            } else {
+                return null;
+            }
         } catch (Exception exception) {
-            throw new ImageUploadException("Failed to upload photo");
+            log.error(exception.toString());
+            return photoName;
         }
     }
     public void deletePhoto(String objectName) {

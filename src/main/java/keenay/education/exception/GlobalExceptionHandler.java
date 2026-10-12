@@ -55,7 +55,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({RuntimeException.class, AuthenticationException.class, TaskBusyException.class,
             AdvertisementResponseBusyException.class, ChatAlreadyCreated.class,
-            ImageDeleteException.class, ImageUploadException.class})
+            ImageDeleteException.class, ImageUploadException.class, TaskIsNotCreate.class})
     public ResponseEntity<Object> handleRuntimeException(Exception ex) {
         Map<String, Object> body = createMessage(ex);
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
