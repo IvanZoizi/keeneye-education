@@ -86,11 +86,8 @@ public class TaskServiceImpl implements TaskService {
         String oldPhoto = existing.getPhotoUrl();
 
         Tasks updated = imageManager.uploadThen(photo, user, photoUrl -> {
-            List<Tasks> rows = tasksRepository.updateTaskPhoto(id, user.getCustomerId(), photoUrl);
-            if (rows.isEmpty()) {
-                throw new TaskNotFoundException("This task is not found.");
-            }
-            return rows.get(0);
+            existing.setPhotoUrl(photoUrl);
+            return existing;
         });
 
         publisher.publishEvent(new ImageEvent(oldPhoto, updated.getPhotoUrl()));

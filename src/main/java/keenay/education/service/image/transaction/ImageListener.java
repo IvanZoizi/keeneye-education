@@ -15,11 +15,17 @@ public class ImageListener {
 
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     public void deleteImageAfterCommit(ImageEvent imageEvent) {
+        if (imageEvent.getOldPhotoUrl() == null) {
+            return;
+        }
         imageManager.deleteSafePhoto(imageEvent.getOldPhotoUrl());
     }
 
     @TransactionalEventListener(phase = TransactionPhase.AFTER_ROLLBACK)
     public void deleteImageAfterRollback(ImageEvent imageEvent) {
+        if (imageEvent.getNewPhotoUrl() == null) {
+            return;
+        }
         imageManager.deleteSafePhoto(imageEvent.getNewPhotoUrl());
     }
 

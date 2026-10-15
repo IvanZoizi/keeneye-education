@@ -43,7 +43,9 @@ public class ImageManager {
     }
 
     public void deleteSafePhoto(String photo) {
-        if (photo == null || photo.isEmpty()) return;
+        if (photo == null || photo.isEmpty()) {
+            return;
+        }
         try {
             imageService.deletePhoto(photo);
         } catch (ImageDeleteException ex) {
