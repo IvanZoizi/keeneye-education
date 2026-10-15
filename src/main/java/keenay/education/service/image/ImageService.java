@@ -57,7 +57,6 @@ public class ImageService {
 
     }
 
-    @Named("photoUrlToPresigned")
     public String getUrlForPhoto(String photoName) {
         try {
             if (photoName != null && !photoName.isEmpty()) {

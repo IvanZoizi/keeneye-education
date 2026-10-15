@@ -78,5 +78,7 @@ logging:
   level:
     keenay.education: INFO
     io.tarantool: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.springframework.orm.jpa: DEBUG
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - [%mdc] %msg%n"

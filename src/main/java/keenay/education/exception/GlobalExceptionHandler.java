@@ -47,15 +47,15 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(body, HttpStatus.FORBIDDEN);
     }
 
-    @ExceptionHandler({InternalException.class, NoMailFoundException.class, Exception.class})
+    @ExceptionHandler({InternalException.class, NoMailFoundException.class, Exception.class,
+            ImageDeleteException.class, ImageUploadException.class, TaskIsNotCreate.class})
     public ResponseEntity<Object> handleInternalException(Exception ex) {
         Map<String, Object> body = createMessage(ex);
         return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler({RuntimeException.class, AuthenticationException.class, TaskBusyException.class,
-            AdvertisementResponseBusyException.class, ChatAlreadyCreated.class,
-            ImageDeleteException.class, ImageUploadException.class, TaskIsNotCreate.class})
+            AdvertisementResponseBusyException.class, ChatAlreadyCreated.class})
     public ResponseEntity<Object> handleRuntimeException(Exception ex) {
         Map<String, Object> body = createMessage(ex);
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);

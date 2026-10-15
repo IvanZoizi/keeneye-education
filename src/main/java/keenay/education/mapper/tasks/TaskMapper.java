@@ -2,12 +2,13 @@ package keenay.education.mapper.tasks;
 
 import keenay.education.dto.tasks.TaskDTO;
 import keenay.education.entity.Tasks;
+import keenay.education.service.image.ImageManager;
 import keenay.education.service.image.ImageService;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
-@Mapper(componentModel = "spring", uses = ImageService.class)
+@Mapper(componentModel = "spring", uses = ImageManager.class)
 public interface TaskMapper {
 
     @Mappings({
