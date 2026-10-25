@@ -1,10 +1,14 @@
 package keenay.education.config;
 
 import io.jsonwebtoken.JwtException;
+import keenay.education.entity.Chat;
+import keenay.education.repository.jpa.ChatRepository;
 import keenay.education.security.jwt.JwtService;
 import keenay.education.service.impl.CustomUserServiceImpl;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.BadRequestException;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageDeliveryException;
@@ -16,7 +20,11 @@ import org.springframework.security.authentication.AuthenticationCredentialsNotF
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.memory.UserAttribute;
 import org.springframework.stereotype.Component;
+
+import java.security.Principal;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -25,7 +33,9 @@ public class JwtChannelInterceptor implements ChannelInterceptor {
     private final JwtService jwtService;
     private final CustomUserServiceImpl customUserService;
     private final WsSessionRegistry sessionRegistry;
+    private final ChatRepository chatRepository;
 
+    @SneakyThrows
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
         StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
@@ -43,6 +53,21 @@ public class JwtChannelInterceptor implements ChannelInterceptor {
 
         if (StompCommand.SUBSCRIBE.equals(command) || StompCommand.SEND.equals(command)) {
             if (accessor.getUser() == null) {
+                throw new AuthenticationCredentialsNotFoundException("Unauthorized");
+            }
+            Principal user = accessor.getUser();
+            if (accessor.getDestination() == null) {
+                throw new BadRequestException("Request is bad");
+            }
+            if (
+                    !accessor.getDestination().startsWith("/queue/chats/") &&
+                            !accessor.getDestination().startsWith("/app/chat/")) {
+                throw new BadRequestException("Request is bad");
+            }
+            String[] destination = accessor.getDestination().split("/");
+            Boolean isChat = chatRepository.isParticipant(Long.parseLong(destination[destination.length - 1]),
+                    user.getName());
+            if (!isChat) {
                 throw new AuthenticationCredentialsNotFoundException("Unauthorized");
             }
         }

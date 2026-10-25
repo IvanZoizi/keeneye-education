@@ -22,4 +22,5 @@ public interface AdvertisementService {
     AdvertisementDTO setResponse(CustomUserDetail customUserDetail, Long id, Long responseId);
     List<AdvertisementDTO> getAdvertisementBySkills(CustomUserDetail customUserDetail);
     AdvertisementDTO completeAdvertisement(CustomUserDetail customUserDetail, Long id);
+    AdvertisementDTO canceledAdvertisement(CustomUserDetail customUserDetail, Long id);
 }

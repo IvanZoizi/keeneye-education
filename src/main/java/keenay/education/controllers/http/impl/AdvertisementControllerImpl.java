@@ -111,4 +111,11 @@ public class AdvertisementControllerImpl implements AdvertisementController {
                                                   @PathVariable("id") Long id) {
         return advertisementService.completeAdvertisement(customUserDetail, id);
     }
+
+    @PostMapping("/cancel/{id}")
+    @PreAuthorize("hasAuthority('ROLE_customer')")
+    public AdvertisementDTO canceledAdvertisement(@AuthenticationPrincipal CustomUserDetail customUserDetail,
+                                                  @PathVariable("id") Long id) {
+        return advertisementService.canceledAdvertisement(customUserDetail, id);
+    }
 }

@@ -56,7 +56,6 @@ public class JwtFilter extends OncePerRequestFilter {
     }
 
     private void setCustomUserDetailsToSecurityContextHolder(String token) {
-        String login = jwtService.getLoginFromToken(token);
         JwtInfo jwtInfo = getJwtInfoFromCache(token);
         if (!isTokenValid(jwtInfo)) {
             throw new AccessDeniedException("jwt token is died");

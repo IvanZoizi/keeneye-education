@@ -90,4 +90,6 @@ public class ChatServiceImpl implements ChatService {
         return messagesRepository.getMessagesByChat_IdOrderByCreatedAtDesc(chatId, pageable)
                 .map(chatMapper::getDTO);
     }
+
+
 }

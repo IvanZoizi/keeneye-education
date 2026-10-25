@@ -16,4 +16,8 @@ public interface ChatRepository extends JpaRepository<Chat, Long> {
 
     @Query(value = "SELECT * FROM chat WHERE id = :id AND (customer_id = :user_id OR seller_id = :user_id)", nativeQuery = true)
     Optional<Chat> findMessages(@Param("id") Long chatId, @Param("user_id") Long userId);
+
+    @Query("SELECT COUNT(c) > 0 FROM Chat c " +
+            "WHERE c.id = :chatId AND (c.seller.email = :email OR c.customer.email = :email)")
+    boolean isParticipant(@Param("chatId") Long chatId, @Param("email") String email);
 }

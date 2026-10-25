@@ -167,5 +167,20 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         return this.updateStatus(customUserDetail, id, new AdvertisementBodyStatusDTO(AdvertisementStatus.FINISHED));
     }
 
+    @Override
+    public AdvertisementDTO canceledAdvertisement(CustomUserDetail customUserDetail, Long id) {
+        Advertisement advertisement = advertisementRepository.findByIdAndCustomer_Id(id, customUserDetail.getCustomerId())
+                .orElseThrow(() -> new AdvertisementNotFoundException("Advertisement is not create"));
+
+        for (Tasks task : advertisement.getTasksList()) {
+            taskService.updateTaskStatus(customUserDetail, task.getId(), new TaskBodyStatusDTO(TasksStatus.CANCELLED));
+        }
+        advertisementResponseService.updateStatus(
+                customUserDetail, advertisement.getSelectedResponseId(),
+                new AdvertisementResponseBodyStatusDTO(AdvertisementResponseStatus.REJECTED)
+        );
+        return this.updateStatus(customUserDetail, id, new AdvertisementBodyStatusDTO(AdvertisementStatus.CANCELLED));
+    }
+
 
 }
