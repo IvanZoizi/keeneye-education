@@ -104,4 +104,11 @@ public class AdvertisementControllerImpl implements AdvertisementController {
     ) {
         return advertisementService.getAdvertisementBySkills(userDetail);
     }
+
+    @PostMapping("/complete/{id}")
+    @PreAuthorize("hasAuthority('ROLE_customer')")
+    public AdvertisementDTO completeAdvertisement(@AuthenticationPrincipal CustomUserDetail customUserDetail,
+                                                  @PathVariable("id") Long id) {
+        return advertisementService.completeAdvertisement(customUserDetail, id);
+    }
 }

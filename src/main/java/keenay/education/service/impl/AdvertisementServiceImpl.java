@@ -1,12 +1,15 @@
 package keenay.education.service.impl;
 
+import com.github.dockerjava.api.model.TaskStatus;
 import keenay.education.dto.advertisement.AdvertisementBodyDTO;
 import keenay.education.dto.advertisement.AdvertisementBodyStatusDTO;
 import keenay.education.dto.advertisement.AdvertisementDTO;
 import keenay.education.dto.advertisement_response.AdvertisementResponseBodyStatusDTO;
+import keenay.education.dto.tasks.TaskBodyStatusDTO;
 import keenay.education.entity.*;
 import keenay.education.entity.status.AdvertisementResponseStatus;
 import keenay.education.entity.status.AdvertisementStatus;
+import keenay.education.entity.status.TasksStatus;
 import keenay.education.exception.errors.*;
 import keenay.education.mapper.advertisement.AdvertisementMapper;
 import keenay.education.repository.jpa.AdvertisementRepository;
@@ -134,6 +137,9 @@ public class AdvertisementServiceImpl implements AdvertisementService {
                     customUserDetail, response.getId(),
                     new AdvertisementResponseBodyStatusDTO(AdvertisementResponseStatus.REJECTED));
         }
+        for (Tasks task : advertisement.getTasksList()) {
+            taskService.updateTaskStatus(customUserDetail, task.getId(), new TaskBodyStatusDTO(TasksStatus.PROGRESS));
+        }
         return this.updateStatus(customUserDetail, id, new AdvertisementBodyStatusDTO(AdvertisementStatus.PROGRESS));
     }
 
@@ -143,4 +149,23 @@ public class AdvertisementServiceImpl implements AdvertisementService {
                 .map(advertisementMapper::getDTO)
                 .toList();
     }
+
+    @Override
+    public AdvertisementDTO completeAdvertisement(CustomUserDetail customUserDetail, Long id) {
+        Advertisement advertisement = advertisementRepository.findByIdAndCustomer_Id(id, customUserDetail.getCustomerId())
+                .orElseThrow(() -> new AdvertisementNotFoundException("Advertisement is not create"));
+
+        for (Tasks task : advertisement.getTasksList()) {
+            if (!task.getStatus().equals(TasksStatus.FINISHED) && !task.getStatus().equals(TasksStatus.CANCELLED)) {
+                throw new TaskHasNotBeenCompletedException("The task has not been completed.");
+            }
+        }
+        advertisementResponseService.updateStatus(
+                customUserDetail, advertisement.getSelectedResponseId(),
+                new AdvertisementResponseBodyStatusDTO(AdvertisementResponseStatus.FINISHED)
+        );
+        return this.updateStatus(customUserDetail, id, new AdvertisementBodyStatusDTO(AdvertisementStatus.FINISHED));
+    }
+
+
 }
