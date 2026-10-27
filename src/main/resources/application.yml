@@ -1,4 +1,6 @@
 spring:
+  config:
+    import: optional:file:.env[.properties]
   data:
     tarantool:
       host: localhost
@@ -25,7 +27,7 @@ spring:
     enabled: true
     default-schema: public
   security:
-    key: 8074658237c236e39e96e909ac1abb25a3e1773b100096ad6877c439cd452c17
+    key: ${SECURITY_KEY}
     days: 7
   rabbitmq:
     username: admin
@@ -35,8 +37,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: seaoffriendsforyou@gmail.com
-    password: nzzaltcjgbzgfwyr
+    username: ${EMAIL}
+    password: ${PASSWORD}
     properties:
       mail:
         smtp:
@@ -69,8 +71,8 @@ rabbitmq:
 
 minio:
   endpoint: http://localhost:9000
-  access-key: admin
-  secret-key: 1234567890
+  access-key: ${MINIO_USERNAME}
+  secret-key: ${MINIO_SECRET_KEY}
   bucket-name: bucket
   day-life: 7
 
