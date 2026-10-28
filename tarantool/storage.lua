@@ -1,4 +1,3 @@
--- Схема создаётся идемпотентно, только когда инстанс стал rw
 box.watch('box.status', function()
     if box.info.ro then return end
 
@@ -6,7 +5,6 @@ box.watch('box.status', function()
         format = {
             {name = 'token_hash',  type = 'string'},
             {name = 'user_id',     type = 'unsigned'},
-            {name = 'token',       type = 'string'},
             {name = 'customer_id', type = 'unsigned', is_nullable = true},
             {name = 'seller_id',   type = 'unsigned', is_nullable = true},
             {name = 'email',       type = 'string'},
@@ -29,7 +27,6 @@ box.watch('box.status', function()
     })
 end)
 
--- Bootstrap vshard (для single-instance router)
 local vshard = require('vshard')
 local fiber = require('fiber')
 fiber.create(function()

@@ -67,7 +67,6 @@ public class UserServiceImpl implements UserService {
         JwtAutorizeToken jwtAutorizeToken = jwtService.generateAuthToken(user.getEmail(), user.getRoles());
         JwtInfo jwtInfo = JwtInfo.builder()
                 .tokenHash(UtilsService.sha256(jwtAutorizeToken.getToken()))
-                .token(jwtAutorizeToken.getToken())
                 .userId(user.getId())
                 .customerId(user.getCustomer() == null?null:user.getCustomer().getId())
                 .sellerId(user.getSeller() == null?null:user.getSeller().getId())

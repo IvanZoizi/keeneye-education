@@ -32,10 +32,6 @@ public class JwtInfo {
     @JsonProperty("userId")
     private Long userId;
 
-    @Field("token")
-    @JsonProperty("token")
-    private String token;
-
     @Field("customer_id")
     @JsonProperty("customerId")
     private Long customerId;

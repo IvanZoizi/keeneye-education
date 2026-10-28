@@ -15,6 +15,7 @@ RUN tt rocks install crud && tt rocks install vshard
 COPY tarantool/init.lua /opt/tarantool/init.lua
 COPY tarantool/config.yaml /opt/tarantool/config.yaml
 COPY tarantool/storage.lua /opt/tarantool/storage.lua
+COPY tarantool/router.lua /opt/tarantool/router.lua
 WORKDIR /opt/tarantool
 
 USER tarantool

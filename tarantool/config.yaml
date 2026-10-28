@@ -40,6 +40,8 @@ groups:
     sharding:
       roles: [router]
     roles: [roles.crud-router]
+    app:
+      file: /opt/tarantool/router.lua
     replicasets:
       router-rs-001:
         leader: router-001

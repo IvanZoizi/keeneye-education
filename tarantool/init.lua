@@ -7,7 +7,6 @@ local jwt_info = box.schema.space.create('jwt_info', {
         {name = 'token_hash',  type = 'string'},
         {name = 'bucket_id',   type = 'unsigned', is_nullable = true},
         {name = 'user_id',     type = 'unsigned'},
-        {name = 'token',       type = 'string'},
         {name = 'customer_id', type = 'unsigned', is_nullable = true},
         {name = 'seller_id',   type = 'unsigned', is_nullable = true},
         {name = 'email',       type = 'string'},
